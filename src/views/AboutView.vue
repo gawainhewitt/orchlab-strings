@@ -1,6 +1,18 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <p>Has details about the project, what the aim is, who the target market/audience is</p>
+    <img alt="Vue logo" src="../assets/orchlab-logo.png">
+    <AboutDetails msg="Welcome to Orchlab Strings"/>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import AboutDetails from '@/components/AboutDetails.vue'
+
+export default {
+  name: 'AboutView',
+  components: {
+    AboutDetails
+  }
+}
+</script>

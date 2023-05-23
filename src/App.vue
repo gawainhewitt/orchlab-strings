@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/instructions">Instructions</router-link>
+    <router-link to="/">About</router-link> |
+    <router-link to="/play">Play</router-link> |
+    <router-link to="/settings">Settings</router-link>
   </nav>
   <router-view/>
 </template>
