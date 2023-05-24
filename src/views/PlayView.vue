@@ -5,33 +5,14 @@
   </div>
 
   <div id="app">
-    <AppButton 
-      buttonText="Note 1" 
-      buttonColour="#ff5733" 
+    <AppButton v-for="(string, i) in strings"
+      :string="string"
+      :key="i"
+      :buttonText=strings[i].name
+      :buttonColour=strings[i].color
       :testFunction="playNote" 
-      :note="note1Name"
+      :note=strings[i].note
     /> 
-    <br>
-    <AppButton 
-      buttonText="Note 2" 
-      buttonColour="Green" 
-      :testFunction="playNote" 
-      :note="note2Name"
-    /> 
-    <br>
-    <AppButton 
-      buttonText="Note 3" 
-      buttonColour="Purple" 
-      :testFunction="playNote" 
-      :note="note3name"
-    /> 
-    <br>
-    <AppButton 
-      buttonText="Note 4" 
-      buttonColour="Blue" 
-      :testFunction="playNote" 
-      :note="note4name"
-    />
   </div>
 
 </template>
@@ -46,10 +27,11 @@
        },
       data() {
         return {
-          note1Name: "a",
-          note2Name: "b",
-          note3name: "c",
-          note4name: "d"
+          strings: [{name: "note1", note: "a", color: "red"}, 
+                    {name: "note2", note: "b", color: "blue"},
+                    {name: "note3", note: "c", color: "green"},
+                    {name: "note4", note: "d", color: "purple"}
+                  ],
         }
       },
       methods: {
