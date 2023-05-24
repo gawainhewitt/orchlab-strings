@@ -1,5 +1,9 @@
 <template>
-  <div class="note-buttons" :style="myStyle" @click="testFunction(note)">
+  <div 
+    class="note-buttons" 
+    :style="myStyle" 
+    @mouseup="testFunction(note, 'mouseup')
+  ">
     {{ buttonText }}
   </div>
 </template>

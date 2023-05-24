@@ -5,10 +5,33 @@
   </div>
 
   <div id="app">
-    <AppButton buttonText="Note 1" buttonColour="#ff5733" :testFunction="consoleLog" :note="note1Name"/> <br>
-    <AppButton buttonText="Note 2" buttonColour="Green" :testFunction="consoleLog" :note="note2Name"/> <br>
-    <AppButton buttonText="Note 3" buttonColour="Purple" :testFunction="consoleLog" :note="note3name"/> <br>
-    <AppButton buttonText="Note 4" buttonColour="Blue" :testFunction="consoleLog" :note="note4name"/>
+    <AppButton 
+      buttonText="Note 1" 
+      buttonColour="#ff5733" 
+      :testFunction="playNote" 
+      :note="note1Name"
+    /> 
+    <br>
+    <AppButton 
+      buttonText="Note 2" 
+      buttonColour="Green" 
+      :testFunction="playNote" 
+      :note="note2Name"
+    /> 
+    <br>
+    <AppButton 
+      buttonText="Note 3" 
+      buttonColour="Purple" 
+      :testFunction="playNote" 
+      :note="note3name"
+    /> 
+    <br>
+    <AppButton 
+      buttonText="Note 4" 
+      buttonColour="Blue" 
+      :testFunction="playNote" 
+      :note="note4name"
+    />
   </div>
 
 </template>
@@ -30,8 +53,8 @@
         }
       },
       methods: {
-        consoleLog(message){
-          console.log(message);
+        playNote(noteName, eventType){
+          console.log(`note "${noteName}" triggered with ${eventType} event`);
         },
       }
     }
