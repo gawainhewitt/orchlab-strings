@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="play">
     <h1>This is the play page</h1>
@@ -5,20 +7,32 @@
     <PlayButton buttonName="banana" :testFunction="testFunction"/>
     <PlayButton buttonName="strawberry" :testFunction="testFunction"/>
   </div>
+
+  <div id="app">
+    <app-button buttonText="Note 1"/> <br>
+    <app-button buttonText="Note 2"/> <br>
+    <app-button buttonText="Note 3"/>
+  </div>
+
 </template>
 
 <script>
-import PlayButton from '@/components/PlayButton.vue';
+  import AppButton from "../components/AppButton.vue"
 
-export default {
-  components: {
-    PlayButton
-  },
-  methods: {
-    testFunction() {
-      console.log('hairy things')
+    export default {
+      name: "App",
+      components: {
+         AppButton 
+       },
+      data() {
+          return {
+          }
+      },
+      methods: {
+        sayhello(){
+          alert('hello');
+        },
+      }
     }
-  }
-}
 </script>
 

@@ -5,7 +5,22 @@
     <router-link to="/settings">Settings</router-link>
   </nav>
   <router-view/>
+
+  <!-- <div id="app">
+    <app-button />
+  </div> -->
 </template>
+
+<script>
+// import AppButton from "./components/AppButton.vue"
+
+export default {
+  // name: "App",
+  // components: {
+  //   AppButton 
+  // }
+}
+</script>
 
 <style>
 #app {
@@ -15,6 +30,16 @@
   text-align: center;
   color: #2c3e50;
 }
+
+.btn {
+  padding: 30px;
+  flex: 1 0 auto; 
+  color: #4248b9;
+}
+
+/* .block {
+  flex: 1 0 auto;
+} */
 
 nav {
   padding: 30px;
