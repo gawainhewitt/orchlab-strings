@@ -1,7 +1,7 @@
 <template>
-  <button class="dark baseButton">
+  <div class="note-buttons" :style="myStyle">
     {{ buttonText }}
-  </button>
+  </div>
 </template>
 
 
@@ -12,10 +12,22 @@
         type: String,
         default: () => "Label",
       },
-    }
+      buttonColour: String
+    },
+    data() {
+          return {
+            myStyle:{
+            backgroundColor: this.buttonColour
+            }
+          }
+      }
   }
 </script>
 
 <style scoped>
+  .note-buttons {
+    color: rgb(255, 255, 255);
+    border-radius: 25px;
+  }
 
 </style>

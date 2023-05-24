@@ -9,4 +9,11 @@ describe('AppButton.vue', () => {
     });
     expect(wrapper.text()).toMatch(testname);
   });
+  it('renders button with the colour that is passed in', () => {
+    const testColour = "Blue";
+    const wrapper = shallowMount(AppButton, {
+      propsData: { buttonColour: testColour }
+    });
+    expect(wrapper.find('.note-buttons').element.style.backgroundColor).toBe(testColour)
+  })
 })

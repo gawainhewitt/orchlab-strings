@@ -5,9 +5,9 @@
   </div>
 
   <div id="app">
-    <app-button buttonText="Note 1"/> <br>
-    <app-button buttonText="Note 2"/> <br>
-    <app-button buttonText="Note 3"/>
+    <app-button buttonText="Note 1" buttonColour="#ff5733"/> <br>
+    <app-button buttonText="Note 2" buttonColour="Green"/> <br>
+    <app-button buttonText="Note 3" buttonColour="Purple"/>
   </div>
 
 </template>
@@ -18,12 +18,8 @@
     export default {
       name: "App",
       components: {
-         AppButton 
+        AppButton 
        },
-      data() {
-          return {
-          }
-      },
       methods: {
         sayhello(){
           alert('hello');
