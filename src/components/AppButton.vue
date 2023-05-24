@@ -1,5 +1,5 @@
 <template>
-  <div class="note-buttons" :style="myStyle">
+  <div class="note-buttons" :style="myStyle" @click="testFunction(note)">
     {{ buttonText }}
   </div>
 </template>
@@ -12,7 +12,9 @@
         type: String,
         default: () => "Label",
       },
-      buttonColour: String
+      buttonColour: String,
+      testFunction: Function,
+      note: String
     },
     data() {
           return {

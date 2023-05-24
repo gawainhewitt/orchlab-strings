@@ -5,9 +5,10 @@
   </div>
 
   <div id="app">
-    <app-button buttonText="Note 1" buttonColour="#ff5733"/> <br>
-    <app-button buttonText="Note 2" buttonColour="Green"/> <br>
-    <app-button buttonText="Note 3" buttonColour="Purple"/>
+    <AppButton buttonText="Note 1" buttonColour="#ff5733" :testFunction="consoleLog" :note="note1Name"/> <br>
+    <AppButton buttonText="Note 2" buttonColour="Green" :testFunction="consoleLog" :note="note2Name"/> <br>
+    <AppButton buttonText="Note 3" buttonColour="Purple" :testFunction="consoleLog" :note="note3name"/> <br>
+    <AppButton buttonText="Note 4" buttonColour="Blue" :testFunction="consoleLog" :note="note4name"/>
   </div>
 
 </template>
@@ -20,9 +21,17 @@
       components: {
         AppButton 
        },
+      data() {
+        return {
+          note1Name: "a",
+          note2Name: "b",
+          note3name: "c",
+          note4name: "d"
+        }
+      },
       methods: {
-        sayhello(){
-          alert('hello');
+        consoleLog(message){
+          console.log(message);
         },
       }
     }
