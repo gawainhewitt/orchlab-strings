@@ -1,17 +1,18 @@
-
-
 <template>
   <div class="play">
     <h1>This is the play page</h1>
     <p>For playing the instrument</p>
-    <PlayButton buttonName="banana" :testFunction="testFunction"/>
-    <PlayButton buttonName="strawberry" :testFunction="testFunction"/>
   </div>
 
   <div id="app">
-    <app-button buttonText="Note 1"/> <br>
-    <app-button buttonText="Note 2"/> <br>
-    <app-button buttonText="Note 3"/>
+    <AppButton v-for="(string, i) in strings"
+      :string="string"
+      :key="i"
+      :buttonText=strings[i].name
+      :buttonColour=strings[i].color
+      :testFunction="playNote" 
+      :note=strings[i].note
+    /> 
   </div>
 
 </template>
@@ -22,17 +23,21 @@
     export default {
       name: "App",
       components: {
-         AppButton 
+        AppButton 
        },
       data() {
-          return {
-          }
+        return {
+          strings: [{name: "note1", note: "a", color: "red"}, 
+                    {name: "note2", note: "b", color: "blue"},
+                    {name: "note3", note: "c", color: "green"},
+                    {name: "note4", note: "d", color: "purple"}
+                  ],
+        }
       },
       methods: {
-        sayhello(){
-          alert('hello');
+        playNote(noteName, eventType){
+          console.log(`note "${noteName}" triggered with ${eventType} event`);
         },
       }
     }
 </script>
-

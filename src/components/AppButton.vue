@@ -1,7 +1,11 @@
 <template>
-  <button class="dark baseButton">
+  <div 
+    class="note-buttons" 
+    :style="myStyle" 
+    @mouseup="testFunction(note, 'mouseup')
+  ">
     {{ buttonText }}
-  </button>
+  </div>
 </template>
 
 
@@ -12,25 +16,24 @@
         type: String,
         default: () => "Label",
       },
-    }
+      buttonColour: String,
+      testFunction: Function,
+      note: String
+    },
+    data() {
+          return {
+            myStyle:{
+            backgroundColor: this.buttonColour
+            }
+          }
+      }
   }
 </script>
 
 <style scoped>
-
-  /* .baseButton {
-    padding: 10px;
-    border: none;
-    radius: 
+  .note-buttons {
+    color: rgb(255, 255, 255);
+    border-radius: 25px;
   }
 
-  .light {
-    background: white;
-    color: black;
-  }
-
-  .dark {
-    background: black;
-    color: white;
-  } */
 </style>
