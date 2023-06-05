@@ -1,11 +1,6 @@
 <template>
   <div class="play">
-    <h1>This is the play page</h1>
-    <p>For playing the instrument</p>
-  </div>
-
-  <div id="app">
-    <AppButton v-for="(string, i) in strings"
+      <AppButton v-for="(string, i) in strings"
       :string="string"
       :key="i"
       :buttonText=strings[i].name
@@ -50,3 +45,12 @@
       }
     }
 </script>
+
+<style>
+  .play {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+</style>
