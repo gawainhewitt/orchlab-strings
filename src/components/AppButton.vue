@@ -34,6 +34,6 @@
   .note-buttons {
     color: rgb(255, 255, 255);
     border-radius: 25px;
+    height: 20%;
   }
-
 </style>
