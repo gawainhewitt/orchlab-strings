@@ -5,7 +5,7 @@
       :key="i"
       :buttonText=strings[i].note
       :buttonColour=strings[i].color
-      :testFunction="playNote" 
+      :pluckNote="pluckNote" 
       :note=strings[i].note
     /> 
   </div>
@@ -33,10 +33,10 @@
        },
       data() {
         return {
-          strings: [{name: "note1", note: "A3", color: orange}, 
-                    {name: "note2", note: "B3", color: blueishGreen},
-                    {name: "note3", note: "C4", color: vermilion},
-                    {name: "note4", note: "D4", color: reddishPurple}
+          strings: [{note: "A3", color: orange}, 
+                    {note: "B3", color: blueishGreen},
+                    {note: "C4", color: vermilion},
+                    {note: "D4", color: reddishPurple}
                   ],
           isLoaded: false
         }
@@ -52,7 +52,7 @@
         ).toDestination();
       },
       methods: {
-        playNote(noteName, eventType){
+        pluckNote(noteName, eventType){
           console.log(`note "${noteName}" triggered with ${eventType} event`);
           this.sampler.triggerAttack(noteName)
         },
