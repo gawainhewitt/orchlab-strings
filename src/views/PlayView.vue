@@ -14,6 +14,8 @@
 
 <script>
   import AppButton from "../components/AppButton.vue"
+  import { Sampler } from "tone";
+  import C4 from "../assets/Harp-C4.mp3";
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -31,16 +33,28 @@
        },
       data() {
         return {
-          strings: [{name: "note1", note: "a", color: orange}, 
-                    {name: "note2", note: "b", color: blueishGreen},
-                    {name: "note3", note: "c", color: vermilion},
-                    {name: "note4", note: "d", color: reddishPurple}
-                  ]
+          strings: [{name: "note1", note: "A3", color: orange}, 
+                    {name: "note2", note: "B3", color: blueishGreen},
+                    {name: "note3", note: "C4", color: vermilion},
+                    {name: "note4", note: "D4", color: reddishPurple}
+                  ],
+          isLoaded: false
         }
+      },
+      created() {
+        this.sampler = new Sampler(
+          { C4 },
+          {
+            onload:() => {
+              this.isLoaded = true;
+            }
+          }
+        ).toDestination();
       },
       methods: {
         playNote(noteName, eventType){
           console.log(`note "${noteName}" triggered with ${eventType} event`);
+          this.sampler.triggerAttack(noteName)
         },
       }
     }
