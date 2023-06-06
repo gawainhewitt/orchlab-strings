@@ -2,9 +2,9 @@
   <div 
     class="note-buttons" 
     :style="myStyle" 
-    @mouseup="testFunction(note, 'mouseup')
+    @mouseup.prevent="testFunction(note, 'mouseup')
   ">
-    {{ buttonText }}
+    <span>{{ buttonText }}</span>
   </div>
 </template>
 
@@ -35,5 +35,9 @@
     color: rgb(255, 255, 255);
     border-radius: 25px;
     height: 20%;
+    font-size: 4em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 </style>
