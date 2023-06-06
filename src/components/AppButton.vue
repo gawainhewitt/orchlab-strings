@@ -2,7 +2,7 @@
   <div 
     class="note-buttons" 
     :style="myStyle" 
-    @mouseup.prevent="pluckNote(note, 'mouseup')"
+    @mouseup.prevent="pluckNote('mouseup', note)"
   >
     <span>{{ buttonText }}</span>
   </div>
