@@ -3,7 +3,7 @@
       <AppButton v-for="(string, i) in strings"
       :string="string"
       :key="i"
-      :buttonText=strings[i].name
+      :buttonText=strings[i].note
       :buttonColour=strings[i].color
       :testFunction="playNote" 
       :note=strings[i].note
