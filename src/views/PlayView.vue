@@ -7,6 +7,7 @@
       :buttonColour=strings[i].color
       :pluckNote="pluckNote" 
       :note=strings[i].note
+      @keyup="onKeyUp"
     /> 
   </div>
 
@@ -50,12 +51,27 @@
             }
           }
         ).toDestination();
+        window.addEventListener("keydown", this.pluckNote);
       },
       methods: {
-        pluckNote(noteName, eventType){
-          console.log(`note "${noteName}" triggered with ${eventType} event`);
-          this.sampler.triggerAttack(noteName)
+        pluckNote(eventType, noteName='C4'){
+          if(eventType === "mouseup"){
+            console.log(`note "${noteName}" triggered with ${eventType} event`);
+            this.sampler.triggerAttack(noteName)
+          }else{
+            const key = eventType.key;
+            const keys = ["z", "x", "c", "v"];
+            for(let i = 0; i < keys.length; i++){
+              if(keys[i] === key){
+                console.log(key)
+                this.sampler.triggerAttack(this.strings[i].note); // not reliable as strings is an object
+              }
+            }
+          }
         },
+        onKeyUp(evt){
+          console.log(evt);
+        }
       }
     }
 </script>
