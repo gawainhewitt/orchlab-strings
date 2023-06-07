@@ -64,7 +64,7 @@
             for(let i = 0; i < keys.length; i++){
               if(keys[i] === key){
                 console.log(key)
-                this.sampler.triggerAttack(this.strings[i].note); // not reliable as strings is an object
+                this.sampler.triggerAttack(this.strings[i].note); // not reliable as strings is an object so need to change this
               }
             }
           }
