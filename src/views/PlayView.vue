@@ -6,6 +6,7 @@
       :buttonText=strings[i].note
       :buttonColour=strings[i].color
       :pluckNote="pluckNote" 
+      :bowNote="bowNote"
       :note=strings[i].note
     /> 
   </div>
@@ -16,7 +17,8 @@
   import AppButton from "../components/AppButton.vue"
   import { Sampler } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
-  import B3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
+  import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
+  import bowB3 from "../assets/358231__mtg__cello-b3.flac";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
@@ -46,16 +48,26 @@
         }
       },
       created() {
-        this.sampler = new Sampler(
-          { B3 },
+        this.pluckSampler = new Sampler(
+          { B3: pluckB3 },
           {
             onload:() => {
               this.isLoaded = true;
             }
           }
         ).toDestination();
-        this.sampler.attack = 0;
-        this.sampler.release = 1;
+        this.pluckSampler.attack = 0;
+        this.pluckSampler.release = 1;
+
+        this.bowSampler = new Sampler(
+          { B3: bowB3 },
+          {
+            onload:() => {
+              this.isLoaded = true;
+            }
+          }
+        ).toDestination();
+        this.bowSampler.loop = true;
         window.addEventListener("keydown", this.handleQwerty);
       },
       unmounted() {
@@ -71,8 +83,12 @@
             }
         },
         pluckNote(eventType, noteName){
-          console.log(`note "${noteName}" triggered with ${eventType} event`);
-          this.sampler.triggerAttack(noteName);
+          console.log(`note "${noteName}" plucked with ${eventType} event`);
+          this.pluckSampler.triggerAttack(noteName);
+        },
+        bowNote(eventType, noteName){
+          console.log(`note "${noteName}" bowed with ${eventType} event`);
+          this.bowSampler.triggerAttack(noteName);
         }
       }
     }
