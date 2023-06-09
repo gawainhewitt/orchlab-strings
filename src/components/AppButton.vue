@@ -2,7 +2,7 @@
   <div 
     class="note-buttons" 
     :style="myStyle" 
-    @mouseup.prevent="pluckNote('mouseup', note)"
+    v-touch:release.prevent="handleTouch"
   >
     <span>{{ buttonText }}</span>
   </div>
@@ -26,7 +26,12 @@
             backgroundColor: this.buttonColour
             }
           }
+    },
+    methods: {
+      handleTouch() {
+        this.pluckNote('touch', this.note);
       }
+    }
   }
 </script>
 
@@ -39,5 +44,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    user-select: none;
   }
 </style>
