@@ -15,7 +15,11 @@
 <script>
   import AppButton from "../components/AppButton.vue"
   import { Sampler } from "tone";
-  import C4 from "../assets/cello-short.flac";
+  // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
+  import B3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
+  // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
+  // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
+
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -43,13 +47,15 @@
       },
       created() {
         this.sampler = new Sampler(
-          { C4 },
+          { B3 },
           {
             onload:() => {
               this.isLoaded = true;
             }
           }
         ).toDestination();
+        this.sampler.attack = 0;
+        this.sampler.release = 1;
         window.addEventListener("keydown", this.handleQwerty);
       },
       unmounted() {
