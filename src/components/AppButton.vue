@@ -2,7 +2,9 @@
   <div 
     class="note-buttons" 
     :style="myStyle" 
-    v-touch:release.prevent="handleTouch"
+    v-touch:press="handlePress"
+    v-touch:release="handleRelease"
+    v-touch:drag="onDrag"
   >
     <span>{{ buttonText }}</span>
   </div>
@@ -12,24 +14,54 @@
 <script>
   export default {
     props: {
-      buttonText: {
-        type: String,
-        default: () => "Label",
-      },
+      buttonText:  String,
       buttonColour: String,
       pluckNote: Function,
+      bowNote: Function,
       note: String
     },
     data() {
-          return {
-            myStyle:{
-            backgroundColor: this.buttonColour
-            }
-          }
+      return {
+        myStyle:{
+        backgroundColor: this.buttonColour
+        },
+        bowing: 0,
+        pluck: true,
+        bowSound: false
+      }
     },
     methods: {
-      handleTouch() {
-        this.pluckNote('touch', this.note);
+      handlePress(event) {
+        if(event.type === "mousedown"){
+          this.bowing = event.x;
+        console.log(`press ${event.x}`);
+        }else{
+          this.bowing = event.changedTouches[0].clientX
+          console.log(`press ${event.changedTouches[0].clientX}`);
+        }
+      },
+      handleRelease(event) {
+        if (this.pluck) {
+          this.pluckNote(event.type, this.note);
+        }
+        this.pluck = true;
+        this.bowSound = false;
+      },
+      onDrag(event){
+        let eventX
+        if(event.type === "mousemove"){
+          eventX = event.x;
+        }else{
+          eventX = event.changedTouches[0].clientX;
+        }
+          
+        if((this.bowing - eventX > 10) || (this.bowing - eventX < 10)){
+          if(this.bowSound === false){
+            this.pluck = false;
+            this.bowNote('touch',this.note)
+            this.bowSound = true;
+          }
+        }
       }
     }
   }
