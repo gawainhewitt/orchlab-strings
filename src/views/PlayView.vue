@@ -15,7 +15,7 @@
 <script>
   import AppButton from "../components/AppButton.vue"
   import { Sampler } from "tone";
-  import C4 from "../assets/42247__timkahn__c_s-cello-c4.ogg";
+  import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
