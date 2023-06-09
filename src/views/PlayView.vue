@@ -7,7 +7,6 @@
       :buttonColour=strings[i].color
       :pluckNote="pluckNote" 
       :note=strings[i].note
-      @keyup="onKeyUp"
     /> 
   </div>
 
@@ -34,10 +33,10 @@
        },
       data() {
         return {
-          strings: [{note: "A3", color: orange}, 
-                    {note: "B3", color: blueishGreen},
-                    {note: "C4", color: vermilion},
-                    {note: "D4", color: reddishPurple}
+          strings: [{key: "Z", note: "A3", color: orange}, 
+                    {key: "X", note: "B3", color: blueishGreen},
+                    {key: "C", note: "C4", color: vermilion},
+                    {key: "V", note: "D4", color: reddishPurple}
                   ],
           isLoaded: false
         }
@@ -54,23 +53,19 @@
         window.addEventListener("keydown", this.pluckNote);
       },
       methods: {
-        pluckNote(eventType, noteName='C4'){
+        pluckNote(eventType, noteName){
           if(eventType === "mouseup"){
             console.log(`note "${noteName}" triggered with ${eventType} event`);
             this.sampler.triggerAttack(noteName)
           }else{
-            const key = eventType.key;
-            const keys = ["z", "x", "c", "v"];
-            for(let i = 0; i < keys.length; i++){
-              if(keys[i] === key){
-                console.log(key)
-                this.sampler.triggerAttack(this.strings[i].note); // not reliable as strings is an object so need to change this
+            const qwertyInput = eventType.key.toUpperCase();
+            for(let i = 0; i < this.strings.length; i++){
+              if(this.strings[i].key === qwertyInput){
+                console.log(`note "${this.strings[i].note}" triggered with ${eventType} event`);
+                this.sampler.triggerAttack(this.strings[i].note); 
               }
             }
           }
-        },
-        onKeyUp(evt){
-          console.log(evt);
         }
       }
     }
