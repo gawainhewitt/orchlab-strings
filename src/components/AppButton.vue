@@ -2,8 +2,8 @@
   <div 
     class="note-buttons" 
     :style="myStyle" 
-    @mouseup.prevent="testFunction(note, 'mouseup')
-  ">
+    @mouseup.prevent="pluckNote('mouseup', note)"
+  >
     <span>{{ buttonText }}</span>
   </div>
 </template>
@@ -17,7 +17,7 @@
         default: () => "Label",
       },
       buttonColour: String,
-      testFunction: Function,
+      pluckNote: Function,
       note: String
     },
     data() {

@@ -5,7 +5,7 @@
       :key="i"
       :buttonText=strings[i].note
       :buttonColour=strings[i].color
-      :testFunction="playNote" 
+      :pluckNote="pluckNote" 
       :note=strings[i].note
     /> 
   </div>
@@ -15,7 +15,7 @@
 <script>
   import AppButton from "../components/AppButton.vue"
   import { Sampler } from "tone";
-  import C4 from "../assets/Harp-C4.mp3";
+  import C4 from "../assets/42247__timkahn__c_s-cello-c4.mp3";
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -33,10 +33,10 @@
        },
       data() {
         return {
-          strings: [{name: "note1", note: "A3", color: orange}, 
-                    {name: "note2", note: "B3", color: blueishGreen},
-                    {name: "note3", note: "C4", color: vermilion},
-                    {name: "note4", note: "D4", color: reddishPurple}
+          strings: [{key: "Z", note: "A3", color: orange}, 
+                    {key: "X", note: "B3", color: blueishGreen},
+                    {key: "C", note: "C4", color: vermilion},
+                    {key: "V", note: "D4", color: reddishPurple}
                   ],
           isLoaded: false
         }
@@ -50,12 +50,21 @@
             }
           }
         ).toDestination();
+        window.addEventListener("keydown", this.handleQwerty);
       },
       methods: {
-        playNote(noteName, eventType){
-          console.log(`note "${noteName}" triggered with ${eventType} event`);
-          this.sampler.triggerAttack(noteName)
+        handleQwerty(eventType) {
+          const qwertyInput = eventType.key.toUpperCase();
+            for(let i = 0; i < this.strings.length; i++){
+              if(this.strings[i].key === qwertyInput){
+                this.pluckNote("keyboard", this.strings[i].note);
+              }
+            }
         },
+        pluckNote(eventType, noteName){
+          console.log(`note "${noteName}" triggered with ${eventType} event`);
+          this.sampler.triggerAttack(noteName);
+        }
       }
     }
 </script>
