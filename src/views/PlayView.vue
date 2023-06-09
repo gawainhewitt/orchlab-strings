@@ -15,7 +15,7 @@
 <script>
   import AppButton from "../components/AppButton.vue"
   import { Sampler } from "tone";
-  import C4 from "../assets/Harp-C4.mp3";
+  import C4 from "../assets/42247__timkahn__c_s-cello-c4.mp3";
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -50,22 +50,20 @@
             }
           }
         ).toDestination();
-        window.addEventListener("keydown", this.pluckNote);
+        window.addEventListener("keydown", this.handleQwerty);
       },
       methods: {
-        pluckNote(eventType, noteName){
-          if(eventType === "mouseup"){
-            console.log(`note "${noteName}" triggered with ${eventType} event`);
-            this.sampler.triggerAttack(noteName)
-          }else{
-            const qwertyInput = eventType.key.toUpperCase();
+        handleQwerty(eventType) {
+          const qwertyInput = eventType.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
               if(this.strings[i].key === qwertyInput){
-                console.log(`note "${this.strings[i].note}" triggered with ${eventType} event`);
-                this.sampler.triggerAttack(this.strings[i].note); 
+                this.pluckNote("keyboard", this.strings[i].note);
               }
             }
-          }
+        },
+        pluckNote(eventType, noteName){
+          console.log(`note "${noteName}" triggered with ${eventType} event`);
+          this.sampler.triggerAttack(noteName);
         }
       }
     }
