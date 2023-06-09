@@ -52,6 +52,9 @@
         ).toDestination();
         window.addEventListener("keydown", this.handleQwerty);
       },
+      unmounted() {
+        window.removeEventListener("keydown", this.handleQwerty);
+      },
       methods: {
         handleQwerty(event) {
           const qwertyInput = event.key.toUpperCase();
