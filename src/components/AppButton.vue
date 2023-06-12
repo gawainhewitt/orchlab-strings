@@ -12,6 +12,9 @@
 
 
 <script>
+
+  const bowingSensitivity = 60;
+
   export default {
     props: {
       buttonText:  String,
@@ -55,7 +58,7 @@
           eventX = event.changedTouches[0].clientX;
         }
           
-        if((this.bowing - eventX > 10) || (this.bowing - eventX < 10)){
+        if((this.bowing - eventX > bowingSensitivity) || (this.bowing - eventX < bowingSensitivity)){
           if(this.bowSound === false){
             this.pluck = false;
             this.bowNote('touch',this.note)
