@@ -21,6 +21,7 @@
       buttonColour: String,
       pluckNote: Function,
       bowNote: Function,
+      endBow: Function,
       note: String
     },
     data() {
@@ -46,6 +47,8 @@
       handleRelease(event) {
         if (this.pluck) {
           this.pluckNote(event.type, this.note);
+        }else {
+          this.endBow();
         }
         this.pluck = true;
         this.bowSound = false;

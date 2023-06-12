@@ -7,6 +7,7 @@
       :buttonColour=strings[i].color
       :pluckNote="pluckNote" 
       :bowNote="bowNote"
+      :endBow="endBow"
       :note=strings[i].note
     /> 
   </div>
@@ -15,13 +16,12 @@
 
 <script>
   import AppButton from "../components/AppButton.vue"
-  import { Sampler } from "tone";
+  import { Sampler, Player, ToneAudioBuffers} from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
   import bowB3 from "../assets/358231__mtg__cello-b3.flac";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
-
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -48,32 +48,29 @@
         }
       },
       created() {
-        this.pluckSampler = new Sampler(
-          { B3: pluckB3 },
-          {
-            onload:() => {
-              this.isLoaded = true;
-            }
-          }
-        ).toDestination();
-        this.pluckSampler.attack = 0;
-        this.pluckSampler.release = 1;
-
-        this.bowSampler = new Sampler(
-          { B3: bowB3 },
-          {
-            onload:() => {
-              this.isLoaded = true;
-            }
-          }
-        ).toDestination();
-        this.bowSampler.loop = true;
+        this.Sounds = new ToneAudioBuffers({
+          urls: {
+            bowed: bowB3,
+            plucked: pluckB3
+          },
+          onload: () => this.setUpSamplers()
+        }); 
+        console.log(this.Sounds.get("plucked"));
         window.addEventListener("keydown", this.handleQwerty);
       },
       unmounted() {
         window.removeEventListener("keydown", this.handleQwerty);
       },
       methods: {
+        setUpSamplers() {
+          this.pluckSampler = new Sampler(
+          {B3: this.Sounds.get("plucked")}).toDestination();
+          this.pluckSampler.attack = 0;
+          this.pluckSampler.release = 1;
+
+          this.bowSampler = new Player(
+            this.Sounds.get("bowed")).toDestination();
+        },
         handleQwerty(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
@@ -87,8 +84,19 @@
           this.pluckSampler.triggerAttack(noteName);
         },
         bowNote(eventType, noteName){
+          this.bowSampler.loop = true;
+          this.bowSampler.loopStart = 0.5;
+          this.bowSampler.loopEnd = 0.999;
           console.log(`note "${noteName}" bowed with ${eventType} event`);
-          this.bowSampler.triggerAttack(noteName);
+          
+          this.bowSampler.start();
+          this.bowSampler.playbackRate = 2;
+        },
+        endBow(eventType, noteName){
+          console.log(this.Sounds.get("bowed").duration);
+          this.bowSampler.loopEnd = this.Sounds.get("bowed").duration;
+          this.bowSampler.loop = false;
+          console.log(`bow end ${eventType} ${noteName}`);
         }
       }
     }
