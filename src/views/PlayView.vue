@@ -19,7 +19,7 @@
   import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
-import { AMSynth } from "tone";
+  import { AMSynth } from "tone";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
@@ -39,12 +39,11 @@ import { AMSynth } from "tone";
        },
       data() {
         return {
-          strings: [{key: "Z", note: "A3", color: orange}, 
-                    {key: "X", note: "B3", color: blueishGreen},
-                    {key: "C", note: "C4", color: vermilion},
-                    {key: "V", note: "D4", color: reddishPurple}
-                  ],
-          isLoaded: false
+          strings: [{pluckKey: "Z", bowKey: "M", bowing: false, note: "A3", color: orange}, 
+                    {pluckKey: "X", bowKey: ",", bowing: false, note: "B3", color: blueishGreen},
+                    {pluckKey: "C", bowKey: ".", bowing: false, note: "C4", color: vermilion},
+                    {pluckKey: "V", bowKey: "/", bowing: false, note: "D4", color: reddishPurple}
+                  ]
         }
       },
       created() {
@@ -54,10 +53,12 @@ import { AMSynth } from "tone";
           },
           onload: () => this.setUpSamplers()
         }); 
-        window.addEventListener("keydown", this.handleQwerty);
+        window.addEventListener("keydown", this.handleKeyDown);
+        window.addEventListener("keyup", this.handleKeyUp);
       },
       unmounted() {
-        window.removeEventListener("keydown", this.handleQwerty);
+        window.removeEventListener("keydown", this.handleKeyDown);
+        window.removeEventListener("keyup", this.handleKeyUp);
       },
       methods: {
         setUpSamplers() {
@@ -68,7 +69,7 @@ import { AMSynth } from "tone";
 
           this.bowSampler = new PolySynth(
             { voice:  AMSynth,
-              maxPolyphony: 2,
+              maxPolyphony: 4,
               options: {  "volume": -10, 
                           "detune": 0,
                           "portamento": 0,
@@ -83,13 +84,30 @@ import { AMSynth } from "tone";
                           },
                         }
             }).toDestination();
-                  },
-        handleQwerty(event) {
+        },
+        handleKeyDown(event) {
+          const qwertyInput = event.key.toUpperCase();
+          for(let i = 0; i < this.strings.length; i++){
+            if(this.strings[i].bowKey === qwertyInput){
+              if (!this.strings[i].bowing){
+                this.bowNote("keyboard", this.strings[i].note);
+                this.strings[i].bowing = true;
+              }
+            }
+          }
+          
+        },
+        handleKeyUp(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
-              if(this.strings[i].key === qwertyInput){
-                this.pluckNote("keyboard", this.strings[i].note);
-              }
+              if(this.strings[i].pluckKey === qwertyInput){
+                  this.pluckNote("keyboard", this.strings[i].note);
+              }else if(this.strings[i].bowKey === qwertyInput){
+                if (this.strings[i].bowing){
+                  this.endBow("keyboard", this.strings[i].note);
+                  this.strings[i].bowing = false;
+                }
+            }
             }
         },
         pluckNote(eventType, noteName){
@@ -104,7 +122,6 @@ import { AMSynth } from "tone";
           console.log(`bow end ${eventType} ${noteName}`);
           this.bowSampler.triggerRelease(noteName)
         }
-
       }
     }
 </script>
