@@ -39,12 +39,11 @@
        },
       data() {
         return {
-          strings: [{key: "Z", note: "A3", color: orange}, 
-                    {key: "X", note: "B3", color: blueishGreen},
-                    {key: "C", note: "C4", color: vermilion},
-                    {key: "V", note: "D4", color: reddishPurple}
-                  ],
-          isLoaded: false
+          strings: [{pluckKey: "Z", bowKey: "M", bowing: false, note: "A3", color: orange}, 
+                    {pluckKey: "X", bowKey: ",", bowing: false, note: "B3", color: blueishGreen},
+                    {pluckKey: "C", bowKey: ".", bowing: false, note: "C4", color: vermilion},
+                    {pluckKey: "V", bowKey: "/", bowing: false, note: "D4", color: reddishPurple}
+                  ]
         }
       },
       created() {
@@ -70,7 +69,7 @@
 
           this.bowSampler = new PolySynth(
             { voice:  AMSynth,
-              maxPolyphony: 2,
+              maxPolyphony: 4,
               options: {  "volume": -10, 
                           "detune": 0,
                           "portamento": 0,
@@ -86,15 +85,29 @@
                         }
             }).toDestination();
         },
-        handleKeyDown() {
+        handleKeyDown(event) {
+          const qwertyInput = event.key.toUpperCase();
+          for(let i = 0; i < this.strings.length; i++){
+            if(this.strings[i].bowKey === qwertyInput){
+              if (!this.strings[i].bowing){
+                this.bowNote("keyboard", this.strings[i].note);
+                this.strings[i].bowing = true;
+              }
+            }
+          }
           
         },
         handleKeyUp(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
-              if(this.strings[i].key === qwertyInput){
-                this.pluckNote("keyboard", this.strings[i].note);
-              }
+              if(this.strings[i].pluckKey === qwertyInput){
+                  this.pluckNote("keyboard", this.strings[i].note);
+              }else if(this.strings[i].bowKey === qwertyInput){
+                if (this.strings[i].bowing){
+                  this.endBow("keyboard", this.strings[i].note);
+                  this.strings[i].bowing = false;
+                }
+            }
             }
         },
         pluckNote(eventType, noteName){
@@ -109,7 +122,6 @@
           console.log(`bow end ${eventType} ${noteName}`);
           this.bowSampler.triggerRelease(noteName)
         }
-
       }
     }
 </script>
