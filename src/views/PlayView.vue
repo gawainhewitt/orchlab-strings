@@ -7,6 +7,7 @@
       :buttonColour=strings[i].color
       :pluckNote="pluckNote" 
       :bowNote="bowNote"
+      :endBow="endBow"
       :note=strings[i].note
     /> 
   </div>
@@ -15,13 +16,12 @@
 
 <script>
   import AppButton from "../components/AppButton.vue"
-  import { Sampler } from "tone";
+  import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
-  import bowB3 from "../assets/358231__mtg__cello-b3.flac";
+import { AMSynth } from "tone";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
-
 
   // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
@@ -48,32 +48,42 @@
         }
       },
       created() {
-        this.pluckSampler = new Sampler(
-          { B3: pluckB3 },
-          {
-            onload:() => {
-              this.isLoaded = true;
-            }
-          }
-        ).toDestination();
-        this.pluckSampler.attack = 0;
-        this.pluckSampler.release = 1;
-
-        this.bowSampler = new Sampler(
-          { B3: bowB3 },
-          {
-            onload:() => {
-              this.isLoaded = true;
-            }
-          }
-        ).toDestination();
-        this.bowSampler.loop = true;
+        this.Sounds = new ToneAudioBuffers({
+          urls: {
+            plucked: pluckB3
+          },
+          onload: () => this.setUpSamplers()
+        }); 
         window.addEventListener("keydown", this.handleQwerty);
       },
       unmounted() {
         window.removeEventListener("keydown", this.handleQwerty);
       },
       methods: {
+        setUpSamplers() {
+          this.pluckSampler = new Sampler(
+          {B2: this.Sounds.get("plucked")}).toDestination();
+          this.pluckSampler.attack = 0;
+          this.pluckSampler.release = 1;
+
+          this.bowSampler = new PolySynth(
+            { voice:  AMSynth,
+              maxPolyphony: 2,
+              options: {  "volume": -10, 
+                          "detune": 0,
+                          "portamento": 0,
+                          "envelope": {
+                            "attack": 0.7,
+                            "attackCurve": "linear",
+                            "decay": 0,
+                            "decayCurve": "exponential",
+                            "sustain": 0.3,
+                            "release": 1,
+                            "releaseCurve": "linear"
+                          },
+                        }
+            }).toDestination();
+                  },
         handleQwerty(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
@@ -89,7 +99,12 @@
         bowNote(eventType, noteName){
           console.log(`note "${noteName}" bowed with ${eventType} event`);
           this.bowSampler.triggerAttack(noteName);
+        },
+        endBow(eventType, noteName){
+          console.log(`bow end ${eventType} ${noteName}`);
+          this.bowSampler.triggerRelease(noteName)
         }
+
       }
     }
 </script>

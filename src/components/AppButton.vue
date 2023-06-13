@@ -12,12 +12,16 @@
 
 
 <script>
+
+  const bowingSensitivity = 60;
+
   export default {
     props: {
       buttonText:  String,
       buttonColour: String,
       pluckNote: Function,
       bowNote: Function,
+      endBow: Function,
       note: String
     },
     data() {
@@ -43,6 +47,8 @@
       handleRelease(event) {
         if (this.pluck) {
           this.pluckNote(event.type, this.note);
+        }else {
+          this.endBow(event.type, this.note);
         }
         this.pluck = true;
         this.bowSound = false;
@@ -55,7 +61,7 @@
           eventX = event.changedTouches[0].clientX;
         }
           
-        if((this.bowing - eventX > 10) || (this.bowing - eventX < 10)){
+        if((this.bowing - eventX > bowingSensitivity) || (this.bowing - eventX < bowingSensitivity)){
           if(this.bowSound === false){
             this.pluck = false;
             this.bowNote('touch',this.note)
