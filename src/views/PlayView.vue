@@ -55,7 +55,6 @@
           },
           onload: () => this.setUpSamplers()
         }); 
-        console.log(this.Sounds.get("plucked"));
         window.addEventListener("keydown", this.handleQwerty);
       },
       unmounted() {
@@ -88,12 +87,23 @@
           this.bowSampler.loopStart = 0.5;
           this.bowSampler.loopEnd = 0.999;
           console.log(`note "${noteName}" bowed with ${eventType} event`);
-          
+          switch (noteName) {
+            case "A3":
+              this.bowSampler.playbackRate = 0.5;
+              break;
+            case "B3":
+              this.bowSampler.playbackRate = 1;
+              break;
+            case "C4":
+              this.bowSampler.playbackRate = 2;
+              break;
+            case "D4":
+              this.bowSampler.playbackRate = 1 + (1/12 * 3);
+              break;
+          }
           this.bowSampler.start();
-          this.bowSampler.playbackRate = 2;
         },
         endBow(eventType, noteName){
-          console.log(this.Sounds.get("bowed").duration);
           this.bowSampler.loopEnd = this.Sounds.get("bowed").duration;
           this.bowSampler.loop = false;
           console.log(`bow end ${eventType} ${noteName}`);

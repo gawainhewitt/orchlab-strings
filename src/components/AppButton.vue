@@ -48,7 +48,7 @@
         if (this.pluck) {
           this.pluckNote(event.type, this.note);
         }else {
-          this.endBow();
+          this.endBow(event.type, this.note);
         }
         this.pluck = true;
         this.bowSound = false;
