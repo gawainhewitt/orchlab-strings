@@ -19,6 +19,7 @@
   import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
+import { AMSynth } from "tone";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
@@ -61,27 +62,28 @@
       methods: {
         setUpSamplers() {
           this.pluckSampler = new Sampler(
-          {B3: this.Sounds.get("plucked")}).toDestination();
+          {B2: this.Sounds.get("plucked")}).toDestination();
           this.pluckSampler.attack = 0;
           this.pluckSampler.release = 1;
 
-          this.bowSampler = new PolySynth().toDestination();
-          this.bowSampler.set(
-            { "volume": -30, 
-              "detune": 0,
-              "portamento": 0,
-              "envelope": {
-                "attack": 0.2,
-                "attackCurve": "linear",
-                "decay": 0,
-                "decayCurve": "exponential",
-                "sustain": 0.3,
-                "release": 5,
-                "releaseCurve": "exponential"
-              },
-            }
-          );
-        },
+          this.bowSampler = new PolySynth(
+            { voice:  AMSynth,
+              maxPolyphony: 2,
+              options: {  "volume": -10, 
+                          "detune": 0,
+                          "portamento": 0,
+                          "envelope": {
+                            "attack": 0.7,
+                            "attackCurve": "linear",
+                            "decay": 0,
+                            "decayCurve": "exponential",
+                            "sustain": 0.3,
+                            "release": 1,
+                            "releaseCurve": "linear"
+                          },
+                        }
+            }).toDestination();
+                  },
         handleQwerty(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
