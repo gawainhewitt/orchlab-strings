@@ -19,7 +19,7 @@
   import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
-import { AMSynth } from "tone";
+  import { AMSynth } from "tone";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
@@ -54,10 +54,12 @@ import { AMSynth } from "tone";
           },
           onload: () => this.setUpSamplers()
         }); 
-        window.addEventListener("keydown", this.handleQwerty);
+        window.addEventListener("keydown", this.handleKeyDown);
+        window.addEventListener("keyup", this.handleKeyUp);
       },
       unmounted() {
-        window.removeEventListener("keydown", this.handleQwerty);
+        window.removeEventListener("keydown", this.handleKeyDown);
+        window.removeEventListener("keyup", this.handleKeyUp);
       },
       methods: {
         setUpSamplers() {
@@ -83,8 +85,11 @@ import { AMSynth } from "tone";
                           },
                         }
             }).toDestination();
-                  },
-        handleQwerty(event) {
+        },
+        handleKeyDown() {
+          
+        },
+        handleKeyUp(event) {
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.strings.length; i++){
               if(this.strings[i].key === qwertyInput){
