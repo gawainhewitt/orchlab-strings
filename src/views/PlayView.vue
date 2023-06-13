@@ -16,10 +16,9 @@
 
 <script>
   import AppButton from "../components/AppButton.vue"
-  import { Sampler, Player, ToneAudioBuffers} from "tone";
+  import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import pluckB3 from "../assets/42242__timkahn__c_s-cello-b3.flac";
-  import bowB3 from "../assets/358231__mtg__cello-b3.flac";
   // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
   // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
@@ -50,7 +49,6 @@
       created() {
         this.Sounds = new ToneAudioBuffers({
           urls: {
-            bowed: bowB3,
             plucked: pluckB3
           },
           onload: () => this.setUpSamplers()
@@ -67,8 +65,22 @@
           this.pluckSampler.attack = 0;
           this.pluckSampler.release = 1;
 
-          this.bowSampler = new Player(
-            this.Sounds.get("bowed")).toDestination();
+          this.bowSampler = new PolySynth().toDestination();
+          this.bowSampler.set(
+            { "volume": -30, 
+              "detune": 0,
+              "portamento": 0,
+              "envelope": {
+                "attack": 0.2,
+                "attackCurve": "linear",
+                "decay": 0,
+                "decayCurve": "exponential",
+                "sustain": 0.3,
+                "release": 5,
+                "releaseCurve": "exponential"
+              },
+            }
+          );
         },
         handleQwerty(event) {
           const qwertyInput = event.key.toUpperCase();
@@ -83,31 +95,14 @@
           this.pluckSampler.triggerAttack(noteName);
         },
         bowNote(eventType, noteName){
-          this.bowSampler.loop = true;
-          this.bowSampler.loopStart = 0.5;
-          this.bowSampler.loopEnd = 0.999;
           console.log(`note "${noteName}" bowed with ${eventType} event`);
-          switch (noteName) {
-            case "A3":
-              this.bowSampler.playbackRate = 0.5;
-              break;
-            case "B3":
-              this.bowSampler.playbackRate = 1;
-              break;
-            case "C4":
-              this.bowSampler.playbackRate = 2;
-              break;
-            case "D4":
-              this.bowSampler.playbackRate = 1 + (1/12 * 3);
-              break;
-          }
-          this.bowSampler.start();
+          this.bowSampler.triggerAttack(noteName);
         },
         endBow(eventType, noteName){
-          this.bowSampler.loopEnd = this.Sounds.get("bowed").duration;
-          this.bowSampler.loop = false;
           console.log(`bow end ${eventType} ${noteName}`);
+          this.bowSampler.triggerRelease(noteName)
         }
+
       }
     }
 </script>
