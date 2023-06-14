@@ -22,13 +22,11 @@
       pluckNote: Function,
       bowNote: Function,
       endBow: Function,
-      note: String
+      note: String,
+      numberOfStrings: Number
     },
     data() {
       return {
-        myStyle:{
-        backgroundColor: this.buttonColour
-        },
         bowing: 0,
         pluck: true,
         bowSound: false
@@ -36,6 +34,7 @@
     },
     methods: {
       handlePress(event) {
+        console.log(this.numberOfStrings)
         if(event.type === "mousedown"){
           this.bowing = event.x;
         console.log(`press ${event.x}`);
@@ -69,6 +68,13 @@
           }
         }
       }
+    },
+    computed: {
+      myStyle(){
+        const totalHeight = 85
+        return `backgroundColor: ${this.buttonColour}; 
+                height: ${totalHeight / this.numberOfStrings}%`
+      }
     }
   }
 </script>
@@ -77,7 +83,6 @@
   .note-buttons {
     color: rgb(255, 255, 255);
     border-radius: 25px;
-    height: 20%;
     font-size: 4em;
     display: flex;
     justify-content: center;
