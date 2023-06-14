@@ -4,10 +4,19 @@
     <router-link to="/play">Play</router-link> |
     <router-link to="/settings">Settings</router-link>
   </nav>
-  <router-view/>
+  <router-view :strings="strings" :update-strings="updateStrings"/>
 </template>
 
 <script>
+
+  // const black = "rgb(0, 0, 0)"
+  const orange = "rgb(230, 159, 0)"
+  // const skyBlue = "rgb(86, 180, 233)"
+  const blueishGreen = "rgb(0, 158, 115)"
+  // const yellow = "rgb(240, 228, 66)"
+  // const blue = "rgb(0, 114, 178)"
+  const vermilion = "rgb(213, 94, 0)"
+  const reddishPurple = "rgb(204, 121, 167)"
 
   document.addEventListener("gesturestart", function (e) {
     e.preventDefault();
@@ -29,6 +38,21 @@ export default {
   // components: {
   //   AppButton 
   // }
+  data() {
+      return {
+        strings: [{string: 0, stringOn: true, pluckKey: "Z", bowKey: "M", bowing: false, note: "A3", color: orange}, 
+                  {string: 1, stringOn: true, pluckKey: "X", bowKey: ",", bowing: false, note: "B3", color: blueishGreen},
+                  {string: 2, stringOn: true, pluckKey: "C", bowKey: ".", bowing: false, note: "C4", color: vermilion},
+                  {string: 3, stringOn: true, pluckKey: "V", bowKey: "/", bowing: false, note: "D4", color: reddishPurple}
+                ]
+      }
+      },
+      methods: {
+        updateStrings(string, key, value) {
+          this.strings[string][key] = value;
+          console.log(this.strings)
+        }
+      }
 }
 </script>
 
@@ -38,6 +62,7 @@ html, body, #app {
   margin: 0;
   overscroll-behavior: none;
   overscroll-behavior-x: none;
+  background-color: rgb(240, 228, 66);
 }
 
 #app {
