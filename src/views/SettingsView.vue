@@ -1,7 +1,6 @@
 <template>
   <div class="settings">
     <StringSettings v-for="(string, i) in strings" 
-      :string="string"
       :key="i"
       :buttonColour=strings[i].color
       :active="strings[i].stringOn"
