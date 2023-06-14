@@ -8,6 +8,7 @@
       :pluckNote="pluckNote" 
       :bowNote="bowNote"
       :endBow="endBow"
+      :numberOfStrings=activeStrings.length
       :note=activeStrings[i].note
     /> 
   </div>
