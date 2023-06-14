@@ -1,14 +1,15 @@
 <template>
-  
-
   <div 
-    class="string-settings" 
+    class="settings-outer" 
     :style="myStyle" 
   >
-      <span>
-        <SlideToggle class="slide" :value=checked @input=valueLog />
-        <label for="check">{{ onOrOff }}</label> 
-      </span>
+      <div :style="myStyle" class="settings-inner">
+        <div>
+          <SlideToggle class="slide" :value=checked @input=valueLog />
+          <label for="check">{{ onOrOff }}</label> 
+        </div>
+        <div>test</div>
+    </div>
   </div>
 </template>
 
@@ -29,9 +30,6 @@
     },
     data() {
       return {
-        myStyle:{
-        backgroundColor: this.buttonColour,
-        },
         onOrOff: "on"
       }
     },
@@ -42,15 +40,24 @@
       }
     },
     computed: {
-      checked() {
-          return this.active;
+      myStyle() {
+        console.log(this.onOrOff)
+        let dynamicOpacity = this.active ? 1 : 0.6;
+        console.log(`dynamicOpacity ${dynamicOpacity}`)
+        return { 
+          backgroundColor: this.buttonColour,
+          opacity: dynamicOpacity
         }
+      },
+      checked() {
+        return this.active;
       }
+    }
   }
 </script>
 
 <style scoped>
-  .string-settings {
+  .settings-outer {
     color: rgb(255, 255, 255);
     border-radius: 25px;
     height: 20%;
@@ -59,6 +66,15 @@
     justify-content: center;
     flex-direction: column;
     user-select: none;
+  }
+
+  .settings-inner {
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
 </style>
