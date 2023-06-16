@@ -9,6 +9,11 @@
           <label for="check">{{ onOrOff }}</label> 
         </div>
         <div>
+          <DropDown 
+            :options="['hello', 'safe', 'hungry']"
+            default="hello"
+            @input="console.log($event)"
+          />
           
         </div>
     </div>
@@ -18,10 +23,12 @@
 <script>
 
   import SlideToggle from '@/components/SlideToggle.vue';
+  import DropDown from '@/components/DropDown.vue'
 
   export default {
     components: {
-      SlideToggle
+      SlideToggle,
+      DropDown
     },
     props: {
       buttonColour: String,
