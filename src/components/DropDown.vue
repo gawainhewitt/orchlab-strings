@@ -57,7 +57,7 @@
 
 .custom-select {
   position: relative;
-  width: 100%;
+  width: 200%;
   text-align: left;
   outline: none;
   height: 47px;
