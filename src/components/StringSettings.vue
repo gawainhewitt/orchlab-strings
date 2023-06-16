@@ -4,18 +4,19 @@
     :style="myStyle" 
   >
       <div :style="myStyle" class="settings-inner">
+        <div> </div>
         <div>
-          <SlideToggle class="slide" :value=checked @input=valueLog />
+          <SlideToggle class="slide" :value=checked @input=stringState />
           <label for="check">{{ onOrOff }}</label> 
         </div>
         <div>
           <DropDown 
-            :options="['hello', 'safe', 'hungry']"
-            default="hello"
-            @input="console.log($event)"
+            :options=currentScale
+            :default=note
+            @input="changeNote"
           />
-          
         </div>
+        <div></div>
     </div>
   </div>
 </template>
@@ -34,17 +35,22 @@
       buttonColour: String,
       active: Boolean,
       number: Number,
-      updateStrings: Function
+      updateStrings: Function,
+      note: String
     },
     data() {
       return {
-        onOrOff: "on"
+        onOrOff: "on",
+        currentScale: ["C3", "D3", "E3", "F3", "G3", "A3", "B3"]
       }
     },
     methods: {
-      valueLog(value) {
+      stringState(value) {
         this.updateStrings(this.number, "stringOn", value)
         this.onOrOff = value ? "on" : "off"
+      },
+      changeNote(note) {
+        this.updateStrings(this.number, "note", note)
       }
     },
     computed: {
