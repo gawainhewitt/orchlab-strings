@@ -8,11 +8,12 @@
           <SlideToggle class="slide" :value=checked @input=valueLog />
           <label for="check">{{ onOrOff }}</label> 
         </div>
-        <div>test</div>
+        <div>
+          
+        </div>
     </div>
   </div>
 </template>
-
 
 <script>
 
@@ -41,9 +42,7 @@
     },
     computed: {
       myStyle() {
-        console.log(this.onOrOff)
         let dynamicOpacity = this.active ? 1 : 0.6;
-        console.log(`dynamicOpacity ${dynamicOpacity}`)
         return { 
           backgroundColor: this.buttonColour,
           opacity: dynamicOpacity
