@@ -1,56 +1,75 @@
 <template>
-  
-
   <div 
-    class="string-settings" 
+    class="settings-outer" 
     :style="myStyle" 
   >
-      <span>
-        <SlideToggle class="slide" :value=checked @input=valueLog />
-        <label for="check">{{ onOrOff }}</label> 
-      </span>
+      <div :style="myStyle" class="settings-inner">
+        <div> </div>
+        <div>
+          <SlideToggle class="slide" :value=checked @input=stringState />
+          <label for="check">{{ onOrOff }}</label> 
+        </div>
+        <div>
+          <DropDown 
+            :options=currentScale
+            :default=note
+            @input="changeNote"
+          />
+        </div>
+        <div></div>
+    </div>
   </div>
 </template>
-
 
 <script>
 
   import SlideToggle from '@/components/SlideToggle.vue';
+  import DropDown from '@/components/DropDown.vue'
 
   export default {
     components: {
-      SlideToggle
+      SlideToggle,
+      DropDown
     },
     props: {
       buttonColour: String,
       active: Boolean,
       number: Number,
-      updateStrings: Function
+      updateStrings: Function,
+      note: String
     },
     data() {
       return {
-        myStyle:{
-        backgroundColor: this.buttonColour,
-        },
-        onOrOff: "on"
+        onOrOff: "on",
+        currentScale: ["C3", "D3", "E3", "F3", "G3", "A3", "B3"]
       }
     },
     methods: {
-      valueLog(value) {
+      stringState(value) {
         this.updateStrings(this.number, "stringOn", value)
         this.onOrOff = value ? "on" : "off"
+      },
+      changeNote(note) {
+        this.updateStrings(this.number, "note", note)
       }
     },
     computed: {
-      checked() {
-          return this.active;
+      myStyle() {
+        let dynamicOpacity = this.active ? 1 : 0.6;
+        return { 
+          backgroundColor: this.buttonColour,
+          opacity: dynamicOpacity
         }
+      },
+      checked() {
+        return this.active;
       }
+    }
   }
 </script>
 
 <style scoped>
-  .string-settings {
+  .settings-outer {
     color: rgb(255, 255, 255);
     border-radius: 25px;
     height: 20%;
@@ -59,6 +78,15 @@
     justify-content: center;
     flex-direction: column;
     user-select: none;
+  }
+
+  .settings-inner {
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
 </style>

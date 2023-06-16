@@ -70,10 +70,12 @@
       }
     },
     computed: {
-      myStyle(){
+      myStyle() {
         const totalHeight = 85
-        return `backgroundColor: ${this.buttonColour}; 
-                height: ${totalHeight / this.numberOfStrings}%`
+        return {
+          backgroundColor: this.buttonColour, 
+          height: `${totalHeight / this.numberOfStrings}%`
+        }
       }
     }
   }

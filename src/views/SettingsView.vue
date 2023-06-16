@@ -5,6 +5,7 @@
       :buttonColour=strings[i].color
       :active="strings[i].stringOn"
       :number="strings[i].string"
+      :note="strings[i].note"
       :updateStrings="updateStrings"
       ></StringSettings>
   </div>
