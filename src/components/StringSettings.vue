@@ -12,7 +12,7 @@
         <div>
           <DropDown 
             :options=currentScale
-            :default=note
+            :default=currentNote
             @input="changeNote"
           />
         </div>
@@ -36,12 +36,14 @@
       active: Boolean,
       number: Number,
       updateStrings: Function,
-      note: String
+      note: String,
+      octave: String
     },
     data() {
       return {
         onOrOff: "on",
-        currentScale: ["C3", "D3", "E3", "F3", "G3", "A3", "B3"]
+        currentScale: ["C", "D", "E", "F", "G", "A", "B"],
+        currentNote: [...this.note][0]
       }
     },
     methods: {
@@ -50,7 +52,7 @@
         this.onOrOff = value ? "on" : "off"
       },
       changeNote(note) {
-        this.updateStrings(this.number, "note", note)
+        this.updateStrings(this.number, "note", note + this.octave)
       }
     },
     computed: {

@@ -3,8 +3,8 @@
     <div></div>
     <DropDown 
       :options=octaves
-      :default='3'
-      @input=octave
+      :default="octave"
+      @input="changeOctave($event, 'octave')"
     />
     <div>
     </div>
@@ -18,6 +18,7 @@
       :number="strings[i].string"
       :note="strings[i].note"
       :updateStrings="updateStrings"
+      :octave="octave"
       ></StringSettings>
   </div>
       
@@ -38,15 +39,25 @@
     },
     data() {
       return {
-        octaves: ['1', '2', '3', '4', '5', '6', '7'],
-        
+        octaves: ['1', '2', '3', '4', '5', '6', '7']
       }
     },
-    computed: {
-      octave(value) {
-        
-        console.log(value)
+    methods: {
+      changeOctave(value) {
+        for(let i = 0; i < this.strings.length; i++){
+            const whichNote = [...this.strings[i].note]
+            const note = whichNote[0];
+            const octave = value;
+            this.updateStrings(i, "note", `${note}${octave}`);
+          }
       }
+      
+    },
+    computed: {
+      octave() {
+          let whichOctave = [...this.strings[0].note]
+          return whichOctave[1];
+        }
     }
 
   }
