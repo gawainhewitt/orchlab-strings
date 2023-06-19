@@ -13,6 +13,8 @@
     :allTheNotes=allTheNotes
     :currentOctave=currentOctave
     :updateOctave=updateOctave
+    :currentKey=currentKey
+    :updateKey=updateKey
     />
 </template>
 
@@ -40,25 +42,21 @@
       e.preventDefault();
       document.body.style.zoom = 1;
   });
-// import AppButton from "./components/AppButton.vue"
 
 export default {
-  // name: "App",
-  // components: {
-  //   AppButton 
-  // }
   data() {
       return {
-        strings: [{string: 0, stringOn: true, pluckKey: "Z", bowKey: "M", bowing: false, note: "A3", color: orange}, 
-                  {string: 1, stringOn: true, pluckKey: "X", bowKey: ",", bowing: false, note: "B3", color: blueishGreen},
-                  {string: 2, stringOn: true, pluckKey: "C", bowKey: ".", bowing: false, note: "C4", color: vermilion},
-                  {string: 3, stringOn: true, pluckKey: "V", bowKey: "/", bowing: false, note: "D4", color: reddishPurple}
+        strings: [{string: 0, stringOn: true, pluckKey: "Z", bowKey: "M", bowing: false, note: "C3", color: orange}, 
+                  {string: 1, stringOn: true, pluckKey: "X", bowKey: ",", bowing: false, note: "E3", color: blueishGreen},
+                  {string: 2, stringOn: true, pluckKey: "C", bowKey: ".", bowing: false, note: "G3", color: vermilion},
+                  {string: 3, stringOn: true, pluckKey: "V", bowKey: "/", bowing: false, note: "B3", color: reddishPurple}
                 ],
         currentScale: {
           name: "major",
           notes: ["C", "D", "E", "F", "G", "A", "B"]
         },
         currentOctave: "3",
+        currentKey: "C",
         scales: {
           major: [0,2,4,5,7,9,11],
           pentatonic: [0,2,4,7,9],
@@ -73,19 +71,30 @@ export default {
   methods: {
     updateStrings(string, key, value) {
       this.strings[string][key] = value;
-      console.log(this.strings)
+      // console.log(this.strings)
     },
     updateOctave(octave){
+      for(let i = 0; i < this.strings.length; i++){
+            const note = this.strings[i].note;
+            const replaced = note.slice(0, -1) + octave;
+            this.updateStrings(i, "note", replaced);
+          }
       this.currentOctave = octave;
     },
-    changeScale(value) {
-        this.currentScale.name = value;
+    changeScale(value = this.currentScale.name) {
         let newScale = [];
+        const keyIndex = this.allTheNotes.indexOf(this.currentKey);
         for(let i = 0; i < this.scales[value].length; i ++){
-          newScale[i] = this.allTheNotes[this.scales[value][i]]
+          const noteIndex = this.scales[value][i];
+          newScale[i] = this.allTheNotes[(keyIndex + noteIndex) % this.allTheNotes.length];
         }
+        this.currentScale.name = value;
         this.currentScale.notes = newScale;
-      }
+      },
+    updateKey(key) {
+      this.currentKey = key;
+      this.changeScale();
+    }
   }
 }
 </script>
@@ -113,10 +122,6 @@ html, body, #app {
   color: #4248b9;
 }
 
-/* .block {
-  flex: 1 0 auto;
-} */
-
 nav {
   padding: 30px;
 }
@@ -129,5 +134,4 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-
 </style>

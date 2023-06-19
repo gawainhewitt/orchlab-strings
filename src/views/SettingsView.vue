@@ -3,9 +3,15 @@
     <div></div>
     <div class="spacer"></div>
     <DropDown 
+      :options=allTheNotes
+      :default=currentKey
+      @input=updateKey
+    />
+    <div class="spacer"></div> 
+    <DropDown 
       :options=octaves
       :default=currentOctave
-      @input="changeOctave($event, 'octave')"
+      @input=updateOctave
     />
     <div class="spacer"></div>
     <DropDown 
@@ -50,22 +56,13 @@
       scales: Object,
       allTheNotes: Array,
       currentOctave: String,
-      updateOctave: Function
+      updateOctave: Function,
+      currentKey: String,
+      updateKey: Function
     },
     data() {
       return {
         octaves: ['1', '2', '3', '4', '5', '6', '7']
-      }
-    },
-    methods: {
-      changeOctave(value) {
-        for(let i = 0; i < this.strings.length; i++){
-            const whichNote = [...this.strings[i].note]
-            const note = whichNote[0];
-            const octave = value;
-            this.updateStrings(i, "note", `${note}${octave}`);
-          }
-        this.updateOctave(value);
       }
     }
   }
