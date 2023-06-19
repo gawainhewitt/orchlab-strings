@@ -1,11 +1,19 @@
 <template>
   <div class="global-settings">
     <div></div>
+    <div class="spacer"></div>
     <DropDown 
       :options=octaves
-      :default="octave"
+      :default=currentOctave
       @input="changeOctave($event, 'octave')"
     />
+    <div class="spacer"></div>
+    <DropDown 
+      :options=Object.keys(scales)
+      :default=currentScale.name
+      @input="changeScale"
+    />
+    <div class="spacer"></div>
     <div>
     </div>
   </div>
@@ -18,7 +26,8 @@
       :number="strings[i].string"
       :note="strings[i].note"
       :updateStrings="updateStrings"
-      :octave="octave"
+      :octave=currentOctave
+      :scale=currentScale.notes
       ></StringSettings>
   </div>
       
@@ -35,7 +44,13 @@
     }, 
     props: {
       strings: Array,
-      updateStrings: Function
+      updateStrings: Function,
+      currentScale: Object,
+      changeScale: Function,
+      scales: Object,
+      allTheNotes: Array,
+      currentOctave: String,
+      updateOctave: Function
     },
     data() {
       return {
@@ -50,16 +65,9 @@
             const octave = value;
             this.updateStrings(i, "note", `${note}${octave}`);
           }
+        this.updateOctave(value);
       }
-      
-    },
-    computed: {
-      octave() {
-          let whichOctave = [...this.strings[0].note]
-          return whichOctave[1];
-        }
     }
-
   }
 </script>
 
@@ -74,5 +82,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .spacer {
+    width: 5%;
   }
 </style>

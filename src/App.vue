@@ -4,7 +4,16 @@
     <router-link to="/play">Play</router-link> |
     <router-link to="/settings">Settings</router-link>
   </nav>
-  <router-view :strings="strings" :update-strings="updateStrings"/>
+  <router-view 
+    :strings="strings" 
+    :update-strings="updateStrings"
+    :currentScale=currentScale
+    :changeScale=changeScale
+    :scales=scales
+    :allTheNotes=allTheNotes
+    :currentOctave=currentOctave
+    :updateOctave=updateOctave
+    />
 </template>
 
 <script>
@@ -44,15 +53,40 @@ export default {
                   {string: 1, stringOn: true, pluckKey: "X", bowKey: ",", bowing: false, note: "B3", color: blueishGreen},
                   {string: 2, stringOn: true, pluckKey: "C", bowKey: ".", bowing: false, note: "C4", color: vermilion},
                   {string: 3, stringOn: true, pluckKey: "V", bowKey: "/", bowing: false, note: "D4", color: reddishPurple}
-                ]
-      }
-      },
-      methods: {
-        updateStrings(string, key, value) {
-          this.strings[string][key] = value;
-          console.log(this.strings)
+                ],
+        currentScale: {
+          name: "major",
+          notes: ["C", "D", "E", "F", "G", "A", "B"]
+        },
+        currentOctave: "3",
+        scales: {
+          major: [0,2,4,5,7,9,11],
+          pentatonic: [0,2,4,7,9],
+          minor: [0,2,3,5,7,8,10],
+          majorBlues: [0,2,3,4,7,9],
+          minorBlues: [0,3,5,6,7,10],
+          chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        allTheNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+      }  
+    },
+  methods: {
+    updateStrings(string, key, value) {
+      this.strings[string][key] = value;
+      console.log(this.strings)
+    },
+    updateOctave(octave){
+      this.currentOctave = octave;
+    },
+    changeScale(value) {
+        this.currentScale.name = value;
+        let newScale = [];
+        for(let i = 0; i < this.scales[value].length; i ++){
+          newScale[i] = this.allTheNotes[this.scales[value][i]]
         }
+        this.currentScale.notes = newScale;
       }
+  }
 }
 </script>
 
