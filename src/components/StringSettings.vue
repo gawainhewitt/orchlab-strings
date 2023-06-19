@@ -42,8 +42,7 @@
     },
     data() {
       return {
-        onOrOff: "on",
-        currentNote: [...this.note][0]
+        onOrOff: "on"
       }
     },
     methods: {
@@ -65,6 +64,10 @@
       },
       checked() {
         return this.active;
+      },
+      currentNote() {
+        let theNote = this.note;
+        return theNote.slice(0, -1);
       }
     }
   }
