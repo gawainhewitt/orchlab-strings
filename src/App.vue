@@ -18,6 +18,9 @@
     :currentInstrument=currentInstrument
     :instruments=instruments
     :changeInstrument=changeInstrument
+    :pluckNote=pluckNote
+    :bowNote=bowNote
+    :endBow=endBow
     />
 </template>
 
@@ -45,6 +48,14 @@
       e.preventDefault();
       document.body.style.zoom = 1;
   });
+
+  import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
+  // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
+  import celloB3 from "./assets/42242__timkahn__c_s-cello-b3.flac";
+  import celloB5 from "./assets/42244__timkahn__c_s-cello-b5.flac";
+  import { AMSynth } from "tone";
+  // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
+  // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
 
 export default {
   data() {
@@ -102,7 +113,56 @@ export default {
     },
     changeInstrument(instrument) {
       console.log(`change instrument ${instrument}`);
-    }
+    },
+    setUpSamplers() {
+          this.pluckSampler = new Sampler(
+          {B2: this.Sounds.get("celloB3"),
+          B4: this.Sounds.get("celloB5")
+        
+          }).toDestination();
+          this.pluckSampler.attack = 0;
+          this.pluckSampler.release = 1;
+
+          this.bowSampler = new PolySynth(
+            { voice:  AMSynth,
+              maxPolyphony: 4,
+              options: {  "volume": -10, 
+                          "detune": 0,
+                          "portamento": 0,
+                          "envelope": {
+                            "attack": 0.7,
+                            "attackCurve": "linear",
+                            "decay": 0,
+                            "decayCurve": "exponential",
+                            "sustain": 0.3,
+                            "release": 1,
+                            "releaseCurve": "linear"
+                          },
+                        }
+            }).toDestination();
+        },
+        pluckNote(eventType, noteName){
+          console.log(`note "${noteName}" plucked with ${eventType} event`);
+          this.pluckSampler.triggerAttack(noteName);
+        },
+        bowNote(eventType, noteName){
+          console.log(`note "${noteName}" bowed with ${eventType} event`);
+          this.bowSampler.triggerAttack(noteName);
+        },
+        endBow(eventType, noteName){
+          console.log(`bow end ${eventType} ${noteName}`);
+          this.bowSampler.triggerRelease(noteName)
+        }
+  }, 
+  created() {
+    console.log(this.activeStrings);
+        this.Sounds = new ToneAudioBuffers({
+          urls: {
+            celloB3: celloB3,
+            celloB5: celloB5
+          },
+          onload: () => this.setUpSamplers()
+        }); 
   }
 }
 </script>
