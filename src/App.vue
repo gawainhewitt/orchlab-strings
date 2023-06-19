@@ -50,12 +50,9 @@
   });
 
   import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
-  // import A3 from "../assets/42239__timkahn__c_s-cello-a3.flac";
   import celloB3 from "./assets/42242__timkahn__c_s-cello-b3.flac";
   import celloB5 from "./assets/42244__timkahn__c_s-cello-b5.flac";
-  import { AMSynth } from "tone";
-  // import C4 from "../assets/42247__timkahn__c_s-cello-c4.flac";
-  // import D4 from "../assets/42251__timkahn__c_s-cello-d4.flac";
+  import { MonoSynth } from "tone";
 
 export default {
   data() {
@@ -118,26 +115,33 @@ export default {
           this.pluckSampler = new Sampler(
           {B2: this.Sounds.get("celloB3"),
           B4: this.Sounds.get("celloB5")
-        
           }).toDestination();
           this.pluckSampler.attack = 0;
           this.pluckSampler.release = 1;
 
           this.bowSampler = new PolySynth(
-            { voice:  AMSynth,
+            { voice:  MonoSynth,
               maxPolyphony: 4,
-              options: {  "volume": -10, 
-                          "detune": 0,
-                          "portamento": 0,
+              options: {  "volume": -5, 
                           "envelope": {
-                            "attack": 0.7,
-                            "attackCurve": "linear",
-                            "decay": 0,
-                            "decayCurve": "exponential",
-                            "sustain": 0.3,
-                            "release": 1,
-                            "releaseCurve": "linear"
-                          },
+                              "attack": 0.7,
+                              "attackCurve": "linear",
+                              "decay": 0,
+                              "release": 0.8,
+                              "releaseCurve": "exponential",
+                              "sustain": 0.4
+                            },
+                            "filter": {
+                              "Q": 0,
+                              "detune": 0,
+                              "frequency": 10000,
+                              "gain": 0,
+                              "rolloff": -12,
+                              "type": "bandpass"
+                            },
+                            "oscillator": {
+                              "type": "triangle"
+                            }
                         }
             }).toDestination();
         },
