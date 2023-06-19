@@ -15,6 +15,9 @@
     :updateOctave=updateOctave
     :currentKey=currentKey
     :updateKey=updateKey
+    :currentInstrument=currentInstrument
+    :instruments=instruments
+    :changeInstrument=changeInstrument
     />
 </template>
 
@@ -57,6 +60,8 @@ export default {
         },
         currentOctave: "3",
         currentKey: "C",
+        currentInstrument: "Cello",
+        instruments: ["DoubleBass", "Cello", "Viola", "Violin"],
         scales: {
           major: [0,2,4,5,7,9,11],
           pentatonic: [0,2,4,7,9],
@@ -94,6 +99,9 @@ export default {
     updateKey(key) {
       this.currentKey = key;
       this.changeScale();
+    },
+    changeInstrument(instrument) {
+      console.log(`change instrument ${instrument}`);
     }
   }
 }

@@ -14,14 +14,22 @@
       @input=updateOctave
     />
     <div class="spacer"></div>
-    <DropDown 
-      :options=Object.keys(scales)
-      :default=currentScale.name
-      @input="changeScale"
-    />
+  </div>
+  <br>
+  <div class="global-settings">
     <div class="spacer"></div>
-    <div>
-    </div>
+    <DropDown 
+        :options=Object.keys(scales)
+        :default=currentScale.name
+        @input="changeScale"
+      />
+      <div class="spacer"></div>
+      <DropDown 
+        :options=instruments
+        :default=currentInstrument
+        @input="changeInstrument"
+      />
+      <div class="spacer"></div>
   </div>
   <br>
   <div class="settings">
@@ -58,7 +66,10 @@
       currentOctave: String,
       updateOctave: Function,
       currentKey: String,
-      updateKey: Function
+      updateKey: Function,
+      currentInstrument: String,
+      instruments: Array,
+      changeInstrument: Function
     },
     data() {
       return {
@@ -70,7 +81,7 @@
 
 <style>
   .settings {
-    height: 80%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
