@@ -1,7 +1,15 @@
-# orchlab-strings
+# Orchlab Strings
 
-## Project setup
-```
+## Introduction
+[London Philharmonic Orchestra](https://lpo.org.uk/)
+
+## About the app
+
+The app is live on [Netlify](https://orchlab-strings.netlify.app/) and can be used on desktop as well as mobile devices.
+<details>
+<summary>Project setup</summary>
+<br>
+  ```
 npm install
 ```
 
@@ -36,6 +44,22 @@ It has also used this sound https://freesound.org/people/smoseson/sounds/48024/
 And this one https://freesound.org/people/tim.kahn/packs/2680/
 
 http://mta.me/ has an example of crediting
+</details>
 
+<details>
+<summary>Demo</summary>
 
+## Home page
+![Home page](./public/home-page.png)
 
+## Play page
+![Play page](./public/play-page.png)
+
+## Settings page
+![Settings page](./public/settings-page.png)
+
+</details>
+
+## Contributors
+- [Gawain Hewitt](https://gawainhewitt.co.uk/||https://www.linkedin.com/in/gawainhewitt/||https://github.com/gawainhewitt)
+- [Farzan Imanzadeh](https://www.linkedin.com/in/farzan-imanzadeh-079a95a3/||https://github.com/Farzan-I)
