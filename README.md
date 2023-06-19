@@ -1,11 +1,20 @@
 # Orchlab Strings
 
 ## Introduction
-[London Philharmonic Orchestra](https://lpo.org.uk/)
+In association/partnership with [London Philharmonic Orchestra](https://lpo.org.uk/) and []()<- insert name, 
 
 ## About the app
 
-The app is live on [Netlify](https://orchlab-strings.netlify.app/) and can be used on desktop as well as mobile devices.
+The app is live on [Netlify](https://orchlab-strings.netlify.app/) and can be used on desktop as well as mobile devices. 
+
+<details>
+<summary>Playing</summary>
+<br> 
+To play use the keyboard keys (INSERT KEYS HERE) and the mouse
+
+<br>
+</details>
+
 <details>
 <summary>Project setup</summary>
 <br>
