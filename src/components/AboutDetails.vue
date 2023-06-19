@@ -1,15 +1,15 @@
 <template>
   <div class="aboutdetails">
     <h1>{{ msg }}</h1>
-    <p>
-      Information text
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Essential Links</h3>
-    <ul>
-      <p>Create link that leads to the organisation?</p>
-      <!-- <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li> -->
-    </ul>
+    <h2>
+      To play:<br>
+    touch or click screen to pluck,<br>
+    swipe to bow<br>
+    keys Z X C V and M , . /<br>
+    <br><br>
+    On Apple devices turn off silent mode.<br>
+    </h2>
+      
   </div>
 </template>
 
@@ -24,6 +24,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h1 {
+  font-size: 4em;
+}
+h2 {
+  font-size: 2em;
+}
 h3 {
   margin: 40px 0 0;
 }

@@ -1,7 +1,12 @@
 <template>
   <div class="about">
-    <img alt="Vue logo" src="../assets/orchlab-logo.png">
-    <AboutDetails msg="Welcome to Orchlab Strings"/>
+    <img alt="Vue logo" src="../assets/orchlab-logo.png" style="width: 60%">
+    <AboutDetails msg="Strings"/>
+    <div class="bottom-logos">
+    <img alt="Vue logo" src="../assets/LPO_logo.png" style="width: 20%">
+    <img alt="Vue logo" src="../assets/DMLogo.png" style="width: 20%">
+  </div>
+
   </div>
 </template>
 
@@ -16,3 +21,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bottom-logos {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+</style>

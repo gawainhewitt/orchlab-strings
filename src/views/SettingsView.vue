@@ -69,7 +69,10 @@
       updateKey: Function,
       currentInstrument: String,
       instruments: Array,
-      changeInstrument: Function
+      changeInstrument: Function,
+      pluckNote: Function,
+      bowNote: Function,
+      endBow: Function
     },
     data() {
       return {
