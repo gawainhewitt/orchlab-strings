@@ -58,7 +58,11 @@
           const qwertyInput = event.key.toUpperCase();
           for(let i = 0; i < this.activeStrings.length; i++){
             if(this.activeStrings[i].pluckKey === qwertyInput){
+              if(!this.activeStrings[i].plucking){
                   this.pluckNote("keyboard", this.activeStrings[i].note);
+                  this.updateStrings(this.activeStrings[i].string, "plucking", true);
+                  console.log(this.activeStrings[i].plucking);
+              }
             }else if(this.activeStrings[i].bowKey === qwertyInput){
               if (!this.activeStrings[i].bowing){
                 this.bowNote("keyboard", this.activeStrings[i].note);
@@ -76,7 +80,11 @@
                   this.endBow("keyboard", this.activeStrings[i].note);
                   this.updateStrings(this.activeStrings[i].string, "bowing", false);
                 }
-            }
+              }else if(this.activeStrings[i].pluckKey === qwertyInput){
+                if (this.activeStrings[i].plucking){
+                  this.updateStrings(this.activeStrings[i].string, "plucking", false);
+                }
+              }
             }
         }
       }

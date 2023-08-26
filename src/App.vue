@@ -57,10 +57,10 @@
 export default {
   data() {
       return {
-        strings: [{string: 0, stringOn: true, pluckKey: "Z", bowKey: "M", bowing: false, note: "C3", color: orange}, 
-                  {string: 1, stringOn: true, pluckKey: "X", bowKey: ",", bowing: false, note: "E3", color: blueishGreen},
-                  {string: 2, stringOn: true, pluckKey: "C", bowKey: ".", bowing: false, note: "G3", color: vermilion},
-                  {string: 3, stringOn: true, pluckKey: "V", bowKey: "/", bowing: false, note: "B3", color: reddishPurple}
+        strings: [{string: 0, stringOn: true, pluckKey: "Z", plucking: false, bowKey: "M", bowing: false, note: "C3", color: orange}, 
+                  {string: 1, stringOn: true, pluckKey: "X", plucking: false, bowKey: ",", bowing: false, note: "E3", color: blueishGreen},
+                  {string: 2, stringOn: true, pluckKey: "C", plucking: false, bowKey: ".", bowing: false, note: "G3", color: vermilion},
+                  {string: 3, stringOn: true, pluckKey: "V", plucking: false, bowKey: "/", bowing: false, note: "B3", color: reddishPurple}
                 ],
         currentScale: {
           name: "major",
