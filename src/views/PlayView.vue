@@ -57,21 +57,21 @@
         handleKeyDown(event) {
           const qwertyInput = event.key.toUpperCase();
           for(let i = 0; i < this.activeStrings.length; i++){
-            if(this.activeStrings[i].bowKey === qwertyInput){
+            if(this.activeStrings[i].pluckKey === qwertyInput){
+                  this.pluckNote("keyboard", this.activeStrings[i].note);
+            }else if(this.activeStrings[i].bowKey === qwertyInput){
               if (!this.activeStrings[i].bowing){
                 this.bowNote("keyboard", this.activeStrings[i].note);
                 this.updateStrings(this.activeStrings[i].string, "bowing", true);
               }
-            }
+            } 
           }
         },
         handleKeyUp(event) {
           console.log(`key released ${event.key}`)
           const qwertyInput = event.key.toUpperCase();
             for(let i = 0; i < this.activeStrings.length; i++){
-              if(this.activeStrings[i].pluckKey === qwertyInput){
-                  this.pluckNote("keyboard", this.activeStrings[i].note);
-              }else if(this.activeStrings[i].bowKey === qwertyInput){
+              if(this.activeStrings[i].bowKey === qwertyInput){
                 if (this.activeStrings[i].bowing){
                   this.endBow("keyboard", this.activeStrings[i].note);
                   this.updateStrings(this.activeStrings[i].string, "bowing", false);
