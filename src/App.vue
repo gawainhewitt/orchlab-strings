@@ -146,8 +146,8 @@ export default {
             }).toDestination();
         },
         pluckNote(eventType, noteName){
-          console.log(`note "${noteName}" plucked with ${eventType} event`);
           this.pluckSampler.triggerAttack(noteName);
+          console.log(`note "${noteName}" plucked with ${eventType} event`);
         },
         bowNote(eventType, noteName){
           console.log(`note "${noteName}" bowed with ${eventType} event`);
