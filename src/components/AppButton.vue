@@ -35,18 +35,20 @@
     methods: {
       handlePress(event) {
         console.log(this.numberOfStrings)
-        if(event.type === "mousedown"){
+        if(this.bowSound){
+          if(event.type === "mousedown"){
           this.bowing = event.x;
-        console.log(`press ${event.x}`);
+          console.log(`press ${event.x}`);
+          }else{
+            this.bowing = event.changedTouches[0].clientX
+            console.log(`press ${event.changedTouches[0].clientX}`);
+          }
         }else{
-          this.bowing = event.changedTouches[0].clientX
-          console.log(`press ${event.changedTouches[0].clientX}`);
+          this.pluckNote(event.type, this.note);
         }
       },
       handleRelease(event) {
-        if (this.pluck) {
-          this.pluckNote(event.type, this.note);
-        }else {
+        if (this.bowSound) {
           this.endBow(event.type, this.note);
         }
         this.pluck = true;
