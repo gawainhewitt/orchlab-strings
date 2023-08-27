@@ -21,17 +21,17 @@
     :pluckNote=pluckNote
     :bowNote=bowNote
     :endBow=endBow
+    :bowButtonColours="bowButtonColours"
     />
 </template>
 
 <script>
 
-  // const black = "rgb(0, 0, 0)"
   const orange = "rgb(230, 159, 0)"
-  // const skyBlue = "rgb(86, 180, 233)"
+  const skyBlue = "rgb(86, 180, 233)"
   const blueishGreen = "rgb(0, 158, 115)"
-  // const yellow = "rgb(240, 228, 66)"
-  // const blue = "rgb(0, 114, 178)"
+  // const yellow = "rgb(240, 228, 66)" // main background colour
+  const blue = "rgb(0, 114, 178)"
   const vermilion = "rgb(213, 94, 0)"
   const reddishPurple = "rgb(204, 121, 167)"
 
@@ -58,9 +58,9 @@ export default {
   data() {
       return {
         strings: [{string: 0, stringOn: true, pluckKey: "Z", plucking: false, bowKey: "M", bowing: false, note: "C3", color: orange}, 
-                  {string: 1, stringOn: true, pluckKey: "X", plucking: false, bowKey: ",", bowing: false, note: "E3", color: blueishGreen},
+                  {string: 1, stringOn: true, pluckKey: "X", plucking: false, bowKey: ",", bowing: false, note: "E3", color: skyBlue},
                   {string: 2, stringOn: true, pluckKey: "C", plucking: false, bowKey: ".", bowing: false, note: "G3", color: vermilion},
-                  {string: 3, stringOn: true, pluckKey: "V", plucking: false, bowKey: "/", bowing: false, note: "B3", color: reddishPurple}
+                  {string: 3, stringOn: true, pluckKey: "V", plucking: false, bowKey: "/", bowing: false, note: "B3", color: blueishGreen}
                 ],
         currentScale: {
           name: "major",
@@ -70,6 +70,7 @@ export default {
         currentKey: "C",
         currentInstrument: "Cello",
         instruments: ["DoubleBass", "Cello", "Viola", "Violin"],
+        bowButtonColours: [blue, reddishPurple],
         scales: {
           major: [0,2,4,5,7,9,11],
           pentatonic: [0,2,4,7,9],

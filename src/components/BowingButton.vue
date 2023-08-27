@@ -25,17 +25,10 @@
     },
     computed: {
       myStyle() {
-        if(this.bowButton){
-          return {
-            backgroundColor: "green", 
+        return {
+            backgroundColor: this.buttonColour, 
           }
-        } else {
-          return {
-            backgroundColor: "red", 
-          }
-        }
-        
-      }
+      }     
     }
   }
 </script>

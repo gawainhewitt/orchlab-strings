@@ -1,10 +1,10 @@
 <template>
   <div class="play">
     <BowingButton
-    v-touch:press="() => bowButton = !bowButton"
+    v-touch:press="handleBowState"
     :bowButton=bowButton
-    buttonText="bowing"
-    buttonColour="red"
+    :buttonText=bowButtonText
+    :buttonColour=buttonColour
     />
     <StringButton v-for="(string, i) in activeStrings"
     :string="string"
@@ -39,11 +39,14 @@
         updateStrings: Function,
         pluckNote: Function,
         bowNote: Function,
-        endBow: Function
+        endBow: Function,
+        bowButtonColours: Array
              },
       data() {
         return {
-          bowButton: false
+          bowButton: false,
+          bowButtonText: "plucking",
+          buttonColour: this.bowButtonColours[0]
         }
       },
       created() {
@@ -66,6 +69,11 @@
         }
       },
       methods: {
+        handleBowState() {
+          this.bowButton = !this.bowButton;
+          this.bowButtonText = this.bowButton ? "Bowing" : "Plucking";
+          this.buttonColour = this.bowButtonColours[this.bowButton === true ? 1 : 0];
+        },
         handleKeyDown(event) {
           const qwertyInput = event.key.toUpperCase();
           for(let i = 0; i < this.activeStrings.length; i++){
