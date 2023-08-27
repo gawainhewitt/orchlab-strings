@@ -4,7 +4,8 @@
     :style="myStyle" 
     v-touch:press="handlePress"
     v-touch:release="handleRelease"
-    v-touch:drag="onDrag"
+    v-touch:drag="handleDrag"
+    v-on:mouseleave="handleLeave"
   >
     <span>{{ buttonText }}</span>
   </div>
@@ -55,7 +56,13 @@
           this.updateStrings(this.whichString, "bowing", false);
         }
       },
-      onDrag(event){
+      handleLeave(event) {
+        if (this.bowButton) {
+          this.endBow(event.type, this.note);
+          this.updateStrings(this.whichString, "bowing", false);
+        }
+      },
+      handleDrag(event){
         if(this.bowButton){
           let eventX
           if(event.type === "mousemove"){
