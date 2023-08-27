@@ -1,26 +1,38 @@
 <template>
   <div class="play">
-      <AppButton v-for="(string, i) in activeStrings"
-      :string="string"
-      :key="i"
-      :buttonText=activeStrings[i].note
-      :buttonColour=activeStrings[i].color
-      :pluckNote="pluckNote" 
-      :bowNote="bowNote"
-      :endBow="endBow"
-      :numberOfStrings=activeStrings.length
-      :note=activeStrings[i].note
+    <BowingButton
+    v-touch:press="() => bowButton = !bowButton"
+    :bowButton=bowButton
+    buttonText="bowing"
+    buttonColour="red"
+    />
+    <StringButton v-for="(string, i) in activeStrings"
+    :string="string"
+    :key="i"
+    :buttonText=activeStrings[i].note
+    :buttonColour=activeStrings[i].color
+    :pluckNote="pluckNote" 
+    :bowNote="bowNote"
+    :endBow="endBow"
+    :numberOfStrings=activeStrings.length
+    :note=activeStrings[i].note
+    :bowing=activeStrings[i].bowing
+    :bowButton=bowButton
+    :updateStrings="updateStrings"
+    :whichString="i"
     /> 
   </div>
 
 </template>
 
 <script>
-  import AppButton from "../components/AppButton.vue"
+  import StringButton from "../components/StringButton.vue"
+  import BowingButton from "../components/BowingButton.vue"
 
     export default {
       components: {
-        AppButton 
+        StringButton,
+        BowingButton 
        },
       props: {
         strings: Array,
@@ -31,7 +43,7 @@
              },
       data() {
         return {
-          
+          bowButton: false
         }
       },
       created() {

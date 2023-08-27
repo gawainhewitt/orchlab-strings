@@ -23,24 +23,26 @@
       bowNote: Function,
       endBow: Function,
       note: String,
-      numberOfStrings: Number
+      numberOfStrings: Number,
+      bowing: Boolean,
+      bowButton: Boolean,
+      updateStrings: Function,
+      whichString: Number
     },
     data() {
       return {
-        bowing: 0,
-        pluck: true,
-        bowSound: false
+        bowingPosition: 0
       }
     },
     methods: {
       handlePress(event) {
         console.log(this.numberOfStrings)
-        if(this.bowSound){
+        if(this.bowButton){
           if(event.type === "mousedown"){
-          this.bowing = event.x;
+          this.bowingPosition = event.x;
           console.log(`press ${event.x}`);
           }else{
-            this.bowing = event.changedTouches[0].clientX
+            this.bowingPosition = event.changedTouches[0].clientX
             console.log(`press ${event.changedTouches[0].clientX}`);
           }
         }else{
@@ -48,32 +50,31 @@
         }
       },
       handleRelease(event) {
-        if (this.bowSound) {
+        if (this.bowButton) {
           this.endBow(event.type, this.note);
+          this.updateStrings(this.whichString, "bowing", false);
         }
-        this.pluck = true;
-        this.bowSound = false;
       },
       onDrag(event){
-        let eventX
-        if(event.type === "mousemove"){
-          eventX = event.x;
-        }else{
-          eventX = event.changedTouches[0].clientX;
-        }
-          
-        if((this.bowing - eventX > bowingSensitivity) || (this.bowing - eventX < bowingSensitivity)){
-          if(this.bowSound === false){
-            this.pluck = false;
-            this.bowNote('touch',this.note)
-            this.bowSound = true;
+        if(this.bowButton){
+          let eventX
+          if(event.type === "mousemove"){
+            eventX = event.x;
+          }else{
+            eventX = event.changedTouches[0].clientX;
+          }
+          if((this.bowingPosition - eventX > bowingSensitivity) || (this.bowingPosition - eventX < bowingSensitivity)){
+            if(!this.bowing){
+              this.bowNote('touch',this.note);
+              this.updateStrings(this.whichString, "bowing", true);
+            }
           }
         }
       }
     },
     computed: {
       myStyle() {
-        const totalHeight = 85
+        const totalHeight = 70
         return {
           backgroundColor: this.buttonColour, 
           height: `${totalHeight / this.numberOfStrings}%`
