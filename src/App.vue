@@ -52,7 +52,7 @@
   import { Sampler, ToneAudioBuffers, PolySynth } from "tone";
   import celloB3 from "./assets/42242__timkahn__c_s-cello-b3.flac";
   import celloB5 from "./assets/42244__timkahn__c_s-cello-b5.flac";
-  import { MonoSynth } from "tone";
+  import { DuoSynth } from "tone";
 
 export default {
   data() {
@@ -113,6 +113,20 @@ export default {
       console.log(`change instrument ${instrument}`);
     },
     setUpSamplers() {
+          const envFreq = 4000;
+          const cutoffFreq = 1;
+          const ampEnv = {
+            a : 1,
+            d : 1,
+            s : 0.6,
+            r : 5
+          }
+          const filterEnv = {
+            a : 1,
+            d : 1,
+            s : 0.6,
+            r : 5
+          }
           this.pluckSampler = new Sampler(
           {B2: this.Sounds.get("celloB3"),
           B4: this.Sounds.get("celloB5")
@@ -121,30 +135,101 @@ export default {
           this.pluckSampler.release = 1;
 
           this.bowSampler = new PolySynth(
-            { voice:  MonoSynth,
-              maxPolyphony: 4,
-              options: {  "volume": -5, 
-                          "envelope": {
-                              "attack": 0.7,
-                              "attackCurve": "linear",
-                              "decay": 0,
-                              "release": 0.8,
-                              "releaseCurve": "exponential",
-                              "sustain": 0.4
+            { voice:  DuoSynth, // try duosynth to mix square and triangle - also look at looping on the sampler again
+              maxPolyphony: 8,
+            options: {    "vibratoAmount" : 0.2 ,
+                          "vibratoRate" : 2 ,
+                          "harmonicity" : 2.02 ,
+                          "voice0" : {
+                            "volume" : -20 ,
+                            "portamento" : 0 ,
+                            "oscillator" : {
+                              "type" : "square"
                             },
                             "filter": {
                               "Q": 0,
-                              "detune": 0,
-                              "frequency": 10000,
-                              "gain": 0,
                               "rolloff": -12,
-                              "type": "bandpass"
+                              "type": "lowpass",
+                              "frequency": cutoffFreq
                             },
-                            "oscillator": {
-                              "type": "triangle"
+                            "filterEnvelope" : {
+                              "attack" : filterEnv.a ,
+                              "decay" : filterEnv.d ,
+                              "sustain" : filterEnv.s ,
+                              "release" : filterEnv.r,
+                              "octaves" : -0.2,
+                              "baseFrequency" : envFreq
                             }
+                            ,
+                            "envelope" : {
+                              "attack" : ampEnv.a ,
+                              "decay" : ampEnv.d ,
+                              "sustain" : ampEnv.s ,
+                              "release" : ampEnv.r
+                            }
+                          }
+                          ,
+                          "voice1" : {
+                          "volume" : -25 ,
+                          "portamento" : 0 ,
+                          "oscillator" : {
+                            "type" : "sawtooth"
+                          },
+                          "filter": {
+                              "Q": 0,
+                              "rolloff": -12,
+                              "type": "lowpass",
+                              "frequency": cutoffFreq
+                            },
+                          "filterEnvelope" : {
+                            "attack" : filterEnv.a ,
+                            "decay" : filterEnv.d ,
+                            "sustain" : filterEnv.s ,
+                            "release" : filterEnv.r,
+                            "octaves" : -0.2,
+                            "baseFrequency" : envFreq
+                          }
+                          ,
+                          "envelope" : {
+                            "attack" : ampEnv.a ,
+                            "decay" : ampEnv.d,
+                            "sustain" : ampEnv.s,
+                            "release" : ampEnv.r                     }
+                          } 
                         }
             }).toDestination();
+          // this.bowSampler = new PolySynth(
+          //   { voice:  MonoSynth, // try duosynth to mix square and triangle - also look at looping on the sampler again
+          //     maxPolyphony: 8,
+          //     options: {  "volume": -5, 
+          //                 "envelope": {
+          //                     "attack": 3,
+          //                     "attackCurve": "linear",
+          //                     "decay": 0,
+          //                     "release": 2,
+          //                     "releaseCurve": "linear",
+          //                     "sustain": 0.4
+          //                   },
+          //                   "filter": {
+          //                     "Q": 0,
+          //                     "rolloff": -12,
+          //                     "type": "lowpass",
+          //                     "frequency": cutoffFreq
+          //                   },
+          //                   "oscillator": {
+          //                     "type": "triangle"
+          //                   },
+          //                   "filterEnvelope" : {
+          //                     "attack" : 2,
+          //                     "decay" : 0.01,
+          //                     "sustain" : 0.01,
+          //                     "release" : 0.01,
+          //                     "baseFrequency" : 800,
+          //                     "octaves" : 0,
+          //                     "exponent" : 2
+          //                   } 
+          //               }
+          //   }).toDestination();
         },
         pluckNote(eventType, noteName){
           this.pluckSampler.triggerAttack(noteName);
