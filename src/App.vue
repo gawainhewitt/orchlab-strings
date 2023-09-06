@@ -53,6 +53,8 @@
   import celloB3 from "./assets/42242__timkahn__c_s-cello-b3.flac";
   import celloB5 from "./assets/42244__timkahn__c_s-cello-b5.flac";
   import { DuoSynth } from "tone";
+  import { Chorus } from "tone";
+  import { Reverb } from "tone";
 
 export default {
   data() {
@@ -119,7 +121,7 @@ export default {
             a : 1,
             d : 1,
             s : 0.6,
-            r : 5
+            r : 2
           }
           const filterEnv = {
             a : 1,
@@ -127,6 +129,10 @@ export default {
             s : 0.6,
             r : 5
           }
+          this.reverb = new Reverb(
+            { "wet" : 0.7}
+          ).toDestination();
+          this.chorus = new Chorus(4, 1, 0.1).start().connect(this. reverb);
           this.pluckSampler = new Sampler(
           {B2: this.Sounds.get("celloB3"),
           B4: this.Sounds.get("celloB5")
@@ -197,7 +203,7 @@ export default {
                             "release" : ampEnv.r                     }
                           } 
                         }
-            }).toDestination();
+            }).connect(this.chorus);
           // this.bowSampler = new PolySynth(
           //   { voice:  MonoSynth, // try duosynth to mix square and triangle - also look at looping on the sampler again
           //     maxPolyphony: 8,
