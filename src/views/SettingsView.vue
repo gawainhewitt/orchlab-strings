@@ -42,6 +42,7 @@
       :updateStrings="updateStrings"
       :octave=currentOctave
       :scale=currentScale.notes
+      :keyIndex=keyIndex
       ></StringSettings>
   </div>
       
@@ -72,7 +73,9 @@
       changeInstrument: Function,
       pluckNote: Function,
       bowNote: Function,
-      endBow: Function
+      endBow: Function,
+      bowButtonColours: Array,
+      keyIndex: Number
     },
     data() {
       return {
