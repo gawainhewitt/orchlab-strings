@@ -134,30 +134,61 @@ export default {
           ).toDestination();
           this.chorus = new Chorus(4, 1, 0.1).start().connect(this. reverb);
           this.pluckSampler = new Sampler(
-          {B2: this.Sounds.get("celloB3"),
-          B4: this.Sounds.get("celloB5")
-          }).toDestination();
+            { B2: this.Sounds.get("celloB3"),
+              B4: this.Sounds.get("celloB5"),
+              
+            }).toDestination();
           this.pluckSampler.attack = 0;
           this.pluckSampler.release = 1;
+          this.pluckSampler.volume.value = -6;
 
           this.bowSampler = new PolySynth(
             { voice:  DuoSynth, // try duosynth to mix square and triangle - also look at looping on the sampler again
               maxPolyphony: 8,
-            options: {    "vibratoAmount" : 0.2 ,
-                          "vibratoRate" : 2 ,
-                          "harmonicity" : 2.02 ,
-                          "voice0" : {
-                            "volume" : -20 ,
+              options: {    "vibratoAmount" : 0.2 ,
+                            "vibratoRate" : 2 ,
+                            "harmonicity" : 2.02 ,
+                            "voice0" : {
+                              "volume" : -22 ,
+                              "portamento" : 0 ,
+                              "oscillator" : {
+                                "type" : "square"
+                              },
+                              "filter": {
+                                "Q": 0,
+                                "rolloff": -12,
+                                "type": "lowpass",
+                                "frequency": cutoffFreq
+                              },
+                              "filterEnvelope" : {
+                                "attack" : filterEnv.a ,
+                                "decay" : filterEnv.d ,
+                                "sustain" : filterEnv.s ,
+                                "release" : filterEnv.r,
+                                "octaves" : -0.2,
+                                "baseFrequency" : envFreq
+                              }
+                              ,
+                              "envelope" : {
+                                "attack" : ampEnv.a ,
+                                "decay" : ampEnv.d ,
+                                "sustain" : ampEnv.s ,
+                                "release" : ampEnv.r
+                              }
+                            }
+                            ,
+                            "voice1" : {
+                            "volume" : -28 ,
                             "portamento" : 0 ,
                             "oscillator" : {
-                              "type" : "square"
+                              "type" : "sawtooth"
                             },
                             "filter": {
-                              "Q": 0,
-                              "rolloff": -12,
-                              "type": "lowpass",
-                              "frequency": cutoffFreq
-                            },
+                                "Q": 0,
+                                "rolloff": -12,
+                                "type": "lowpass",
+                                "frequency": cutoffFreq
+                              },
                             "filterEnvelope" : {
                               "attack" : filterEnv.a ,
                               "decay" : filterEnv.d ,
@@ -169,40 +200,11 @@ export default {
                             ,
                             "envelope" : {
                               "attack" : ampEnv.a ,
-                              "decay" : ampEnv.d ,
-                              "sustain" : ampEnv.s ,
-                              "release" : ampEnv.r
-                            }
+                              "decay" : ampEnv.d,
+                              "sustain" : ampEnv.s,
+                              "release" : ampEnv.r                     }
+                            } 
                           }
-                          ,
-                          "voice1" : {
-                          "volume" : -25 ,
-                          "portamento" : 0 ,
-                          "oscillator" : {
-                            "type" : "sawtooth"
-                          },
-                          "filter": {
-                              "Q": 0,
-                              "rolloff": -12,
-                              "type": "lowpass",
-                              "frequency": cutoffFreq
-                            },
-                          "filterEnvelope" : {
-                            "attack" : filterEnv.a ,
-                            "decay" : filterEnv.d ,
-                            "sustain" : filterEnv.s ,
-                            "release" : filterEnv.r,
-                            "octaves" : -0.2,
-                            "baseFrequency" : envFreq
-                          }
-                          ,
-                          "envelope" : {
-                            "attack" : ampEnv.a ,
-                            "decay" : ampEnv.d,
-                            "sustain" : ampEnv.s,
-                            "release" : ampEnv.r                     }
-                          } 
-                        }
             }).connect(this.chorus);
           // this.bowSampler = new PolySynth(
           //   { voice:  MonoSynth, // try duosynth to mix square and triangle - also look at looping on the sampler again
@@ -238,7 +240,7 @@ export default {
           //   }).toDestination();
         },
         pluckNote(eventType, noteName){
-          this.pluckSampler.triggerAttack(noteName);
+          this.pluckSampler.triggerAttackRelease(noteName);
           console.log(`note "${noteName}" plucked with ${eventType} event`);
         },
         bowNote(eventType, noteName){
