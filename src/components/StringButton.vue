@@ -15,6 +15,7 @@
 <script>
 
   const bowingSensitivity = 60;
+  // let pressTimes = 0;
 
   export default {
     props: {
@@ -26,6 +27,7 @@
       note: String,
       numberOfStrings: Number,
       bowing: Boolean,
+      plucking: Boolean,
       bowButton: Boolean,
       updateStrings: Function,
       whichString: Number
@@ -47,10 +49,27 @@
             console.log(`press ${event.changedTouches[0].clientX}`);
           }
         }else{
-          this.pluckNote(event.type, this.note);
+          // my current thinking is that the touch library may not be up to scratch and I may need to implement it manually or differently
+          // the boolean is not making a different. Its still triggering on release as. 
+          // although saying that I am not clear how to do touch manually either. 
+          // very frustrating to say the least!!
+          // could i just use a mouse function instead like on press?
+          // but that means no multi touch
+          // ok so a try on mouse doens't seem a lot better, neither with basic JS touch stuff. This is really fucking annoying
+
+
+          // alert(this.plucking);
+          if(!this.plucking){
+            this.pluckNote(event.type, this.note);
+            this.updateStrings(this.whichString, "plucking", true);
+            // pressTimes += 1;
+            // alert(pressTimes);
+          }
         }
       },
       handleRelease(event) {
+        // alert("release");
+        this.updateStrings(this.whichString, "plucking", false);
         if (this.bowButton) {
           this.endBow(event.type, this.note);
           this.updateStrings(this.whichString, "bowing", false);

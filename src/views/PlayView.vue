@@ -17,6 +17,7 @@
     :numberOfStrings=activeStrings.length
     :note=activeStrings[i].note
     :bowing=activeStrings[i].bowing
+    :plucking=activeStrings[i].plucking
     :bowButton=bowButton
     :updateStrings="updateStrings"
     :whichString="i"
