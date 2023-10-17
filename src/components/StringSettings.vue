@@ -10,8 +10,8 @@
           <label for="check">{{ onOrOff }}</label> 
         </div>
         <div>
-          <DropDown 
-            :options=scale
+          <DropDown :key="keyIndex"
+            :options=currentScale
             :default=currentNote
             @input="changeNote"
           />
@@ -38,7 +38,8 @@
       updateStrings: Function,
       note: String,
       octave: String,
-      scale: Array
+      scale: Array,
+      keyIndex: Number
     },
     data() {
       return {
@@ -68,6 +69,10 @@
       currentNote() {
         let theNote = this.note;
         return theNote.slice(0, -1);
+      },
+      currentScale() {
+        let theScale = this.scale;
+        return theScale;
       }
     }
   }

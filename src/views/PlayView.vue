@@ -1,7 +1,7 @@
 <template>
   <div class="play">
     <BowingButton
-    v-touch:press="handleBowState"
+     v-touch:press="handleBowState"
     :bowButton=bowButton
     :buttonText=bowButtonText
     :buttonColour=buttonColour

@@ -22,6 +22,7 @@
     :bowNote=bowNote
     :endBow=endBow
     :bowButtonColours="bowButtonColours"
+    :keyIndex="keyIndex"
     />
 </template>
 
@@ -81,12 +82,14 @@ export default {
           minorBlues: [0,3,5,6,7,10],
           chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         },
-        allTheNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        allTheNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+        keyIndex: 0
       }  
     },
   methods: {
     updateStrings(string, key, value) {
       this.strings[string][key] = value;
+      // console.trace();
       // console.log(this.strings)
     },
     updateOctave(octave){
@@ -106,10 +109,30 @@ export default {
         }
         this.currentScale.name = value;
         this.currentScale.notes = newScale;
+        this.keyChange();
       },
     updateKey(key) {
       this.currentKey = key;
       this.changeScale();
+      this.keyChange();
+    },
+    keyChange(){
+      let arpeggio = [0, 2, 4, 5];
+      for(let i = 0; i < this.strings.length; i ++){
+        let theNote;
+        if (this.currentScale.name === "pentatonic") {
+          theNote = this.currentScale.notes[i];
+        } else {
+          let scaleLength = this.currentScale.notes.length;
+          theNote = this.currentScale.notes[arpeggio[i] % scaleLength];
+        }
+        this.updateStrings(i, "note", theNote+this.currentOctave)
+      }
+      this.updateVueComponent();
+    },
+    updateVueComponent() {
+        this.keyIndex ++;
+        // console.log(this.keyIndex);
     },
     changeInstrument(instrument) {
       console.log(`change instrument ${instrument}`);
@@ -253,7 +276,7 @@ export default {
         }
   }, 
   created() {
-    console.log(this.activeStrings);
+    // console.log(this.activeStrings);
         this.Sounds = new ToneAudioBuffers({
           urls: {
             celloB3: celloB3,
