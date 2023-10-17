@@ -89,6 +89,7 @@ export default {
   methods: {
     updateStrings(string, key, value) {
       this.strings[string][key] = value;
+      // console.trace();
       // console.log(this.strings)
     },
     updateOctave(octave){
@@ -108,18 +109,30 @@ export default {
         }
         this.currentScale.name = value;
         this.currentScale.notes = newScale;
+        this.keyChange();
       },
     updateKey(key) {
       this.currentKey = key;
       this.changeScale();
-      for(let i = 0; i < this.strings.length; i ++){
-        this.updateStrings(i, "note", this.currentScale.notes[i]+this.currentOctave)
-      }
-      this.changeKey();
+      this.keyChange();
     },
-    changeKey() {
+    keyChange(){
+      let arpeggio = [0, 2, 4, 5];
+      for(let i = 0; i < this.strings.length; i ++){
+        let theNote;
+        if (this.currentScale.name === "pentatonic") {
+          theNote = this.currentScale.notes[i];
+        } else {
+          let scaleLength = this.currentScale.notes.length;
+          theNote = this.currentScale.notes[arpeggio[i] % scaleLength];
+        }
+        this.updateStrings(i, "note", theNote+this.currentOctave)
+      }
+      this.updateVueComponent();
+    },
+    updateVueComponent() {
         this.keyIndex ++;
-        console.log(this.keyIndex);
+        // console.log(this.keyIndex);
     },
     changeInstrument(instrument) {
       console.log(`change instrument ${instrument}`);
@@ -263,7 +276,7 @@ export default {
         }
   }, 
   created() {
-    console.log(this.activeStrings);
+    // console.log(this.activeStrings);
         this.Sounds = new ToneAudioBuffers({
           urls: {
             celloB3: celloB3,
