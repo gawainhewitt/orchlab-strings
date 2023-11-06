@@ -1,14 +1,14 @@
 <template>
   <div class="aboutdetails">
     <h1>{{ msg }}</h1>
-    <h2>
+    <h3>
       To play:<br>
     touch or click screen to pluck,<br>
     swipe to bow<br>
     keys Z X C V and M , . /<br>
     <br><br>
-    On Apple devices turn off silent mode.<br>
-    </h2>
+    On Apple devices turn off silent mode.<br><br><br>
+    </h3>
       
   </div>
 </template>
@@ -24,24 +24,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
+
+@media only screen and (max-width: 600px) {
+  h1 {
   font-size: 4em;
+  }
+  h2 {
+    font-size: 2em;
+  }
+  h3 {
+    margin: 40px 0 0;
+  }
 }
-h2 {
-  font-size: 2em;
+
+@media only screen and (min-width: 600px) {
+  h1 {
+  font-size: 6em;
+  margin: 10px;
+  }
+  h2 {
+    font-size: 2em;
+  }
+  h3 {
+    margin: auto;
+  }
 }
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
+
 </style>

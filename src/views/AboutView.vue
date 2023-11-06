@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <img alt="Vue logo" src="../assets/orchlab-logo.png" style="width: 60%" />
+    <img alt="Vue logo" src="../assets/orchlab-logo.png" class="orchlablogo" />
     <AboutDetails msg="Strings"/>
     <div class="bottom-logos">
       <img alt="Vue logo" src="../assets/LPO_logo.png" style="width: 20%" />
@@ -32,6 +32,18 @@ export default {
 
 .about {
   height: 60%;
+}
+
+@media only screen and (max-width: 600px) {
+  .orchlablogo {
+    width: 70%
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .orchlablogo {
+    width: 40%
+  }
 }
 
 </style>
