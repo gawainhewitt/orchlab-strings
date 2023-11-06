@@ -16,7 +16,6 @@
     :currentKey=currentKey
     :updateKey=updateKey
     :currentInstrument=currentInstrument
-    :instruments=instruments
     :changeInstrument=changeInstrument
     :pluckNote=pluckNote
     :bowNote=bowNote
@@ -72,7 +71,6 @@ export default {
         currentOctave: "3",
         currentKey: "C",
         currentInstrument: "Cello",
-        instruments: ["DoubleBass", "Cello", "Viola", "Violin"],
         bowButtonColours: [blue, reddishPurple],
         scales: {
           major: [0,2,4,5,7,9,11],
@@ -117,7 +115,8 @@ export default {
       this.keyChange();
     },
     keyChange(){
-      let arpeggio = [0, 2, 4, 5];
+      const arpeggio = [0, 2, 4, 5];
+      let newStrings = [];
       for(let i = 0; i < this.strings.length; i ++){
         let theNote;
         if (this.currentScale.name === "pentatonic") {
@@ -125,9 +124,13 @@ export default {
         } else {
           let scaleLength = this.currentScale.notes.length;
           theNote = this.currentScale.notes[arpeggio[i] % scaleLength];
+          newStrings.push(theNote);
         }
-        this.updateStrings(i, "note", theNote+this.currentOctave)
       }
+      newStrings.sort((a, b) => { return this.allTheNotes.indexOf(a) - this.allTheNotes.indexOf(b) });
+      newStrings.forEach((note, i) => {
+        this.updateStrings(i, "note", note + this.currentOctave);
+      })
       this.updateVueComponent();
     },
     updateVueComponent() {

@@ -14,21 +14,17 @@
       @input=updateOctave
     />
     <div class="spacer"></div>
-  </div>
-  <br>
-  <div class="global-settings">
-    <div class="spacer"></div>
     <DropDown 
         :options=Object.keys(scales)
         :default=currentScale.name
         @input="changeScale"
       />
+  </div>
+  <br>
+  <div class="global-settings">
+    <div class="spacer"></div>
+    
       <div class="spacer"></div>
-      <DropDown 
-        :options=instruments
-        :default=currentInstrument
-        @input="changeInstrument"
-      />
       <div class="spacer"></div>
   </div>
   <br>
@@ -69,7 +65,6 @@
       currentKey: String,
       updateKey: Function,
       currentInstrument: String,
-      instruments: Array,
       changeInstrument: Function,
       pluckNote: Function,
       bowNote: Function,
