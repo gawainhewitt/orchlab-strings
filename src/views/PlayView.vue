@@ -72,7 +72,7 @@
       methods: {
         handleBowState() {
           this.bowButton = !this.bowButton;
-          this.bowButtonText = this.bowButton ? "Bowing" : "Plucking";
+          this.bowButtonText = this.bowButton ? "bowing" : "plucking";
           this.buttonColour = this.bowButtonColours[this.bowButton === true ? 1 : 0];
         },
         handleKeyDown(event) {
