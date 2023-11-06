@@ -2,10 +2,10 @@
   <div class="aboutdetails">
     <h1>{{ msg }}</h1>
     <h3>
-      To play:<br>
-    touch or click screen to pluck,<br>
-    swipe to bow<br>
-    keys Z X C V and M , . /<br>
+      
+    Touch or click screen to pluck,<br><br>
+    Swipe to bow<br><br>
+    Keys Z X C V and M , . /
     <br><br>
     On Apple devices turn off silent mode.<br><br><br>
     </h3>
@@ -28,6 +28,7 @@ export default {
 @media only screen and (max-width: 600px) {
   h1 {
   font-size: 4em;
+  margin: 10px;
   }
   h2 {
     font-size: 2em;

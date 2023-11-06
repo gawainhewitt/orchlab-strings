@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">About</router-link> |
-    <router-link to="/play">Play</router-link> |
-    <router-link to="/settings">Settings</router-link>
+    <router-link class="menu-link" to="/">about</router-link><span class="pipe"> | </span>
+    <router-link class="menu-link" to="/play">play</router-link><span class="pipe"> |</span>
+    <router-link class="menu-link" to="/settings">settings</router-link>
   </nav>
   <router-view 
     :strings="strings" 
@@ -302,25 +302,45 @@ html, body, #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-.btn {
-  padding: 30px;
-  flex: 1 0 auto; 
-  color: #4248b9;
+  color: black;
 }
 
 nav {
   padding: 30px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+nav a.router-link-exact-active {
+  color: rgb(0, 158, 115);
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.menu-link {
+  text-decoration: none; 
+  color: inherit;
+}
+
+@media only screen and (max-width: 600px) {
+  nav a {
+  font-weight: bold;
+  font-size: 1.5em;
+  }
+
+  .pipe {
+    font-size: 1.5em;
+    font-weight: bold;
+    visibility: hidden;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  nav a {
+  font-weight: bold;
+  font-size: 2em;
+  }
+
+  .pipe {
+    font-size: 2em;
+    font-weight: bold;
+    visibility: hidden;
+  }
 }
 </style>
